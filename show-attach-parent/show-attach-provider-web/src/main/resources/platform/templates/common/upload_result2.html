@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>upload_result</title>
+${jsContext}${appJs}${jquery}
+<script type="text/javascript">
+	$(function(){
+		var data = ${data};
+		debugger;
+		alert(data);
+// 		var command = "(parent.submitCallback(" + data + "))";
+// 		//调用系统默认
+		parent.submitCallback(data); //使用window对象父亲实现回调
+// 		eval(command);
+	});
+</script>
+</head>
+<body>
+</body>
+</html>
