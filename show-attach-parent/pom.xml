@@ -13,5 +13,6 @@
   	<module>show-attach-service</module>
   	<module>show-attach-provider-web</module>
   	<module>show-attach-build</module>
+  	<module>show-attach-test</module>
   </modules>
 </project>

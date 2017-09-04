@@ -6,6 +6,7 @@ public class AttachProviderWebStart {
 	
 	public static void main(String[] args) {
 		PlatformStarter.start(args);
+		System.out.println("文件服务web启动成功!!");
 	}
 
 }
