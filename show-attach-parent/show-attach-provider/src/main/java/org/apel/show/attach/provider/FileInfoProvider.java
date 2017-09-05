@@ -53,7 +53,7 @@ public class FileInfoProvider implements FileInfoProviderService{
 		List<FileInfoEntity> fileInfoEntityList = fileInfoService.findByBusinessId(businessId);
 		for (FileInfoEntity fileInfoEntity : fileInfoEntityList) {
 			FileInfo fileInfo = new FileInfo();
-			BeanUtils.copyProperties(fileInfo, fileInfoEntity);
+			BeanUtils.copyProperties(fileInfoEntity,fileInfo);
 			fileInfoList.add(fileInfo);
 		}
 		return fileInfoList;
@@ -130,7 +130,7 @@ public class FileInfoProvider implements FileInfoProviderService{
 		List<FileInfoEntity> fileInfoEntityList = fileStoreServer.findFileByBusinessId(businessId);
 		for (FileInfoEntity fileInfoEntity : fileInfoEntityList) {
 			FileInfo fileInfo = new FileInfo();
-			BeanUtils.copyProperties(fileInfo, fileInfoEntity);
+			BeanUtils.copyProperties(fileInfoEntity,fileInfo);
 			fileInfoList.add(fileInfo);
 		}
 		return fileInfoList;
