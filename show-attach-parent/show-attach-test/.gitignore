@@ -1,1 +1,6 @@
 /target/
+/logs/
+/office/
+/.classpath
+/.project
+/.settings
