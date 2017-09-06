@@ -24,16 +24,16 @@
 	</build>
   
   <dependencies>
-  <dependency>
-  		   <groupId>org.apel</groupId>
-		    <artifactId>show-attach-provider</artifactId>
-		    <version>1.0.1-SNAPSHOT</version>
-  	</dependency>
-<!--   	<dependency> -->
+<!--   <dependency> -->
 <!--   		   <groupId>org.apel</groupId> -->
-<!-- 		    <artifactId>show-attach-provider-web</artifactId> -->
+<!-- 		    <artifactId>show-attach-provider</artifactId> -->
 <!-- 		    <version>1.0.1-SNAPSHOT</version> -->
 <!--   	</dependency> -->
+  	<dependency>
+  		   <groupId>org.apel</groupId>
+		    <artifactId>show-attach-provider-web</artifactId>
+		    <version>1.0.1-SNAPSHOT</version>
+  	</dependency>
 <!--   	<dependency> -->
 <!--   		   <groupId>org.apel</groupId> -->
 <!-- 		    <artifactId>test-attach-web</artifactId> -->

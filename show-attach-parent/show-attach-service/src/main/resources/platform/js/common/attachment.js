@@ -2,7 +2,9 @@
 (function ($) {
     $.fn.extend({
     	attachment:function(option){
-    		new Attachment(this,option).entry();
+    		var attachment = new Attachment(this,option);
+    		attachment.entry();
+    		return attachment;
     	}
     });
 })(jQuery);
@@ -63,7 +65,7 @@ var Attachment = function(currentElement,option){
 	 * 初始化vue的组件
 	 */
 	var initVue = function(){
-		var appVue = new Vue({ 
+		var appVue = new Vue({
 			el: '.first-panel',
 			data: function(){
 				return {
@@ -497,5 +499,15 @@ var Attachment = function(currentElement,option){
 		          }
 		     });
 		});
+	}
+	
+	/**
+	 * 刷新grid
+	 */
+	me.refreshGrid = function(){
+		fileShowGrid.jqGrid("setGridParam", {
+			postData: {filters:JSON.stringify(getGridFilters())},
+			page:1
+		}).trigger("reloadGrid")
 	}
 }
