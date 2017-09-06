@@ -1,0 +1,25 @@
+body{
+	margin:8px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: "微软雅黑";
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+table, label,.control-label,.help-block,.checkbox,.radio{
+	font-size: 14px;
+	font-style:'微软雅黑';
+}

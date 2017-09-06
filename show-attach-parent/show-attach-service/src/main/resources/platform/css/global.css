@@ -1,0 +1,52 @@
+@charset "utf-8";
+
+.tool-title{
+	font-weight:bold;
+	border-left:3px solid #1F2D3D;
+	text-align: center; 
+	font-size: 14px;
+	margin-top: 5px;
+	margin-bottom:5px;
+	width:120px;
+}
+  	
+.split-line{
+	margin-bottom:25px;
+	margin-top:10px;
+	border-bottom:1px solid #C0CCDA;
+}
+	
+.float-right{
+	float:right;
+}
+
+.grid-column-checkbox{
+	display:inline-block;
+	min-width: 158px;
+	padding: 8px 6px;
+	white-space: nowrap;
+	float: left !important;
+}
+
+.color-red{
+	color:red;
+}
+
+.color-green{
+	color:green;
+}
+
+.color-yellow{
+	color: rgb(244,128,36)
+}
+
+.combotree{
+	width:187px;
+	position:absolute;
+	background:white;
+	z-index:9999;
+	border:1px solid #d1dbe5;
+	border-radius: 2px;
+	height:200px;
+	overflow:auto;
+}
