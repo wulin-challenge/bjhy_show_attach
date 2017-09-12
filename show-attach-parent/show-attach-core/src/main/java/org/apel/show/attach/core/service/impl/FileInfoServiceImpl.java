@@ -7,6 +7,7 @@ import org.apel.gaia.commons.pager.PageBean;
 import org.apel.show.attach.core.dao.FileInfoRepository;
 import org.apel.show.attach.core.domain.FileInfoEntity;
 import org.apel.show.attach.core.service.FileInfoService;
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class FileInfoServiceImpl implements FileInfoService{
+	
+	Logger logger = Logger.getLogger(FileInfoServiceImpl.class);
 	
 	@Autowired
 	private FileInfoRepository fileInfoRepository;
@@ -40,14 +43,25 @@ public class FileInfoServiceImpl implements FileInfoService{
 
 	@Override
 	public void deleteById(String id) {
-		 fileInfoRepository.delete(id);
+		FileInfoEntity findOne = fileInfoRepository.findOne(id);
+		if(findOne != null){
+			fileInfoRepository.delete(id);
+		}else{
+			logger.info("当前数据不存在,id="+id);
+		}
+		
 	}
 
 	@Override
 	public void deleteByBusinessId(String businessId) {
 		List<FileInfoEntity> fileInfoList = findByBusinessId(businessId);
 		for (FileInfoEntity fileInfo : fileInfoList) {
-			fileInfoRepository.delete(fileInfo);
+			if(fileInfo != null){
+				fileInfoRepository.delete(fileInfo);
+			}else{
+				logger.info("当前数据不存在,businessId="+businessId);
+			}
+			
 		}
 	}
 

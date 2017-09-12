@@ -8,16 +8,21 @@ import org.apel.gaia.commons.pager.PageBean;
 import org.apel.show.attach.core.base.FileStoreServer;
 import org.apel.show.attach.core.domain.FileInfoEntity;
 import org.apel.show.attach.core.service.FileInfoService;
+import org.apel.show.attach.core.service.impl.FileInfoServiceImpl;
 import org.apel.show.attach.service.domain.FileInfo;
 import org.apel.show.attach.service.service.FileInfoProviderService;
+import org.jboss.logging.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.alibaba.dubbo.config.annotation.Service;
 
-@Service(protocol="hessian")
-@org.springframework.stereotype.Service
+@Service
+@Component
 public class FileInfoProvider implements FileInfoProviderService{
+	
+	Logger logger = Logger.getLogger(FileInfoServiceImpl.class);
 	
 	@Autowired
 	private FileInfoService fileInfoService;
@@ -61,12 +66,22 @@ public class FileInfoProvider implements FileInfoProviderService{
 
 	@Override
 	public void deleteById(String id) {
-		fileInfoService.deleteById(id);
+		
+		try{
+			fileInfoService.deleteById(id);
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
 	}
 
 	@Override
 	public void deleteByBusinessId(String businessId) {
-		fileInfoService.deleteByBusinessId(businessId);
+		try{
+			fileInfoService.deleteByBusinessId(businessId);
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		
 	}
 
 	@Override

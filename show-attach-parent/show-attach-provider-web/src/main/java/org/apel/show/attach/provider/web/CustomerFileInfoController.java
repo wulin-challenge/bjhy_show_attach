@@ -57,6 +57,8 @@ public class CustomerFileInfoController {
 	public @ResponseBody Message batchDelete(@RequestParam("ids[]") String[] ids){
 		System.out.println(); 
 		for (String id : ids) {
+			FileInfo fileInfo = fileInfoProviderService.findFileById(id);
+			fileInfoProviderService.deleteFile(fileInfo);
 			fileInfoProviderService.deleteById(id);
 		}
 		return new Message(1,"文件删除成功");
