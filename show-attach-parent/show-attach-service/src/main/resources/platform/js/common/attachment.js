@@ -467,11 +467,11 @@ var Attachment = function(currentElement,option){
 	
 	var checkFileSize = function(fileInput){
 		var checkResult = true;
-		var maxSize = 3 * 1024 * 1024;
+		var maxSize = 30 * 1024 * 1024;
 		//火狐
         if (fileInput.files && fileInput.files[0]) {
 			if(fileInput.files[0].size>(maxSize)){
-				toastr.warning('您上传的文件超过3M，请重新上传!');
+				toastr.warning('您上传的文件超过30M，请重新上传!');
 				checkResult = false;
 				return checkResult;
 			}
