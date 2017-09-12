@@ -467,11 +467,11 @@ var Attachment = function(currentElement,option){
 	
 	var checkFileSize = function(fileInput){
 		var checkResult = true;
-		var maxSize = 3 * 1024 * 1024;
+		var maxSize = 30 * 1024 * 1024;
 		//火狐
         if (fileInput.files && fileInput.files[0]) {
 			if(fileInput.files[0].size>(maxSize)){
-				toastr.warning('您上传的文件超过3M，请重新上传!');
+				toastr.warning('您上传的文件超过30M，请重新上传!');
 				checkResult = false;
 				return checkResult;
 			}
@@ -562,14 +562,15 @@ var Attachment = function(currentElement,option){
 	var bindBatchDeleteAttachEvent = function(){
 		
 		$("#first-batch-del-id").click(function(){
+			var ids = fileShowGrid.jqGrid ('getGridParam', 'selarrrow');
+			if(ids.length == 0){
+				toastr.warning("请至少选择一条要删除的数据!");
+				return;
+			}
 			
 			attachVue.batchDelete=true;
 			
-//			var ids = fileShowGrid.jqGrid ('getGridParam', 'selarrrow');
-//			if(ids.length == 0){
-//				toastr.warning("请至少选择一条要删除的数据!");
-//				return;
-//			}
+			
 			//批量删除ajax
 //			attachVue.$confirm('请确认删除数据?', '提示', {
 //		          confirmButtonText: '确定',
