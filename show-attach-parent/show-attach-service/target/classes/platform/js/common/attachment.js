@@ -71,7 +71,10 @@ var Attachment = function(currentElement,option){
 				return {
 					percent: 0,
 					progressStatus: null,
-					progressVisible: false
+					progressVisible: false,
+					singleDelete:false,
+					batchDelete:false,
+					singleDeleteParams:null
 				};
 			},
 			methods: {
@@ -102,8 +105,68 @@ var Attachment = function(currentElement,option){
 					}, 500);
 					
 				},
-				test:function(){
-					alert('xxxxxx');
+				/**
+				 * 单删除取消
+				 */
+				singleDeleteCancel:function(){
+					this.singleDelete=false;
+				},
+				
+				/**
+				 * 单删除确认
+				 */
+				singleDeleteEnsure:function(){
+					var e = this.singleDeleteParams;
+					var dataId = $(e.target).attr("dataId");
+					var ids = [dataId];
+					
+					PlatformUI.ajax({
+						url: http_attachment_url + "/customerFileInfo",
+						type: "post",
+						data: {_method:"delete",ids:ids},
+						afterOperation: function(){
+							fileShowGrid.jqGrid("setGridParam", {
+								postData: {filters:JSON.stringify(getGridFilters())},
+								page:1,
+								sortname:"uploadTime",
+								sortorder:"desc",
+							}).trigger("reloadGrid");
+						}
+					});
+					this.singleDelete=false;
+				},
+				
+				/**
+				 * 批量删除取消
+				 */
+				batchDeleteCancel:function(){
+					this.batchDelete=false;
+				},
+				
+				/**
+				 * 批量删除确认
+				 */
+				batchDeleteEnsure:function(){
+					var ids = fileShowGrid.jqGrid ('getGridParam', 'selarrrow');
+					if(ids.length == 0){
+						toastr.warning("请至少选择一条要删除的数据!");
+						return;
+					}
+					
+					 PlatformUI.ajax({
+				        	url: http_attachment_url + "/customerFileInfo",
+							type: "post",
+							data: {_method:"delete",ids:ids},
+							afterOperation: function(){
+								fileShowGrid.jqGrid("setGridParam", {
+									postData: {filters:JSON.stringify(getGridFilters())},
+									page:1,
+									sortname:"uploadTime",
+									sortorder:"desc",
+								}).trigger("reloadGrid");
+							}
+						});
+					this.batchDelete=false;
 				}
 			}
 			});
@@ -122,7 +185,25 @@ var Attachment = function(currentElement,option){
 			html+= "<el-progress type='circle' :percentage='percent' :status='progressStatus'></el-progress>";
 			html+= "</el-col><el-col :span='8'>&nbsp;</el-col></el-row>";
 			html+= "</el-dialog>";
+			
+			html+= "<el-dialog title='提示' v-model='singleDelete' size='tiny'>";
+			html+= "<span>确认删除吗?</span>";
+			html+= "<span slot='footer' class='dialog-footer'>";
+			html+= "<el-button @click='singleDeleteCancel'>取 消</el-button>";
+			html+= "<el-button type='primary' @click='singleDeleteEnsure'>确 定</el-button>";
+			html+= "</span>";
+			html+= "</el-dialog>";
+			
+			html+= "<el-dialog title='提示' v-model='batchDelete' size='tiny'>";
+			html+= "<span>确认删除吗?</span>";
+			html+= "<span slot='footer' class='dialog-footer'>";
+			html+= "<el-button @click='batchDeleteCancel'>取 消</el-button>";
+			html+= "<el-button type='primary' @click='batchDeleteEnsure'>确 定</el-button>";
+			html+= "</span>";
+			html+= "</el-dialog>";
+			
 			html+= "</div>";
+			
 			html+= "<div class='first-top'>";
 			html+= "<div class='first-form' style='"+showButton('upload')+"'>";
 			html+= "<form id='upload-form-id'  action='"+option.upload_url+"' method='post' enctype='multipart/form-data'>";
@@ -430,37 +511,48 @@ var Attachment = function(currentElement,option){
 		return chars;
 	}
 	
+	
+//	/**
+//	 * 绑定删除事件
+//	 */
+//	var bindDeleteAttachEvent = function(){
+//		$(".first-custom-delete").click(function(e){
+//			var dataId = $(e.target).attr("dataId");
+//			var ids = [dataId];
+//			
+//			
+//			attachVue.$confirm('请确认删除数据?', '提示', {
+//				confirmButtonText: '确定',
+//				cancelButtonText: '取消',
+//				type: 'warning',
+//				callback:function(action, instance){
+//					if(action == 'confirm'){
+//						PlatformUI.ajax({
+//							url: http_attachment_url + "/customerFileInfo",
+//							type: "post",
+//							data: {_method:"delete",ids:ids},
+//							afterOperation: function(){
+//								fileShowGrid.jqGrid("setGridParam", {
+//									postData: {filters:JSON.stringify(getGridFilters())},
+//									page:1,
+//									sortname:"uploadTime",
+//									sortorder:"desc",
+//								}).trigger("reloadGrid");
+//							}
+//						});
+//					}
+//				}
+//			});
+//		});
+//	}
+	
 	/**
 	 * 绑定删除事件
 	 */
 	var bindDeleteAttachEvent = function(){
 		$(".first-custom-delete").click(function(e){
-			var dataId = $(e.target).attr("dataId");
-			var ids = [dataId];
-			
-			
-			attachVue.$confirm('请确认删除数据?', '提示', {
-		          confirmButtonText: '确定',
-		          cancelButtonText: '取消',
-		          type: 'warning',
-		          callback:function(action, instance){
-		        	  if(action == 'confirm'){
-		        		  PlatformUI.ajax({
-					        	url: http_attachment_url + "/customerFileInfo",
-								type: "post",
-								data: {_method:"delete",ids:ids},
-								afterOperation: function(){
-									fileShowGrid.jqGrid("setGridParam", {
-										postData: {filters:JSON.stringify(getGridFilters())},
-										page:1,
-										sortname:"uploadTime",
-										sortorder:"desc",
-									}).trigger("reloadGrid");
-								}
-							});
-		        	  }
-		          }
-		        });
+			attachVue.singleDeleteParams = e;
+			attachVue.singleDelete=true;
 		});
 	}
 	
@@ -470,34 +562,37 @@ var Attachment = function(currentElement,option){
 	var bindBatchDeleteAttachEvent = function(){
 		
 		$("#first-batch-del-id").click(function(){
-			var ids = fileShowGrid.jqGrid ('getGridParam', 'selarrrow');
-			if(ids.length == 0){
-				toastr.warning("请至少选择一条要删除的数据!");
-				return;
-			}
+			
+			attachVue.batchDelete=true;
+			
+//			var ids = fileShowGrid.jqGrid ('getGridParam', 'selarrrow');
+//			if(ids.length == 0){
+//				toastr.warning("请至少选择一条要删除的数据!");
+//				return;
+//			}
 			//批量删除ajax
-			attachVue.$confirm('请确认删除数据?', '提示', {
-		          confirmButtonText: '确定',
-		          cancelButtonText: '取消',
-		          type: 'warning',
-		          callback:function(action, instance){
-		        	  if(action == 'confirm'){
-		        		  PlatformUI.ajax({
-					        	url: http_attachment_url + "/customerFileInfo",
-								type: "post",
-								data: {_method:"delete",ids:ids},
-								afterOperation: function(){
-									fileShowGrid.jqGrid("setGridParam", {
-										postData: {filters:JSON.stringify(getGridFilters())},
-										page:1,
-										sortname:"uploadTime",
-										sortorder:"desc",
-									}).trigger("reloadGrid");
-								}
-							});
-		        	  }
-		          }
-		     });
+//			attachVue.$confirm('请确认删除数据?', '提示', {
+//		          confirmButtonText: '确定',
+//		          cancelButtonText: '取消',
+//		          type: 'warning',
+//		          callback:function(action, instance){
+//		        	  if(action == 'confirm'){
+//		        		  PlatformUI.ajax({
+//					        	url: http_attachment_url + "/customerFileInfo",
+//								type: "post",
+//								data: {_method:"delete",ids:ids},
+//								afterOperation: function(){
+//									fileShowGrid.jqGrid("setGridParam", {
+//										postData: {filters:JSON.stringify(getGridFilters())},
+//										page:1,
+//										sortname:"uploadTime",
+//										sortorder:"desc",
+//									}).trigger("reloadGrid");
+//								}
+//							});
+//		        	  }
+//		          }
+//		     });
 		});
 	}
 	
