@@ -84,19 +84,21 @@ public class FileStoreServer {
 		//存储文件到磁盘,并返回该文件的存储的路径信息
 		FileStorePath fileStorePath = storeFileToDisk(is,fileName, fileSuffix);
 		
-		FileInfoEntity fileInfo = new FileInfoEntity();
-		fileInfo.setId(fileStorePath.getUuid());
-		fileInfo.setBusinessId(businessId);
-		fileInfo.setFileName(fileName);
-		fileInfo.setFileSuffix(fileSuffix);
-		fileInfo.setFileSize(FileStorePath.formetFileSize(fileSize));
-		fileInfo.setRelativePath(fileStorePath.getRelativePath());
-		fileInfo.setUserId(userId);
-		fileInfo.setUploadTime(new Date());
-		fileInfo.setFileStatus(true);
-		fileInfo.setFileSort(fileInfoService.findMaxByBusinessId(businessId));
-		fileInfoService.store(fileInfo);
-		return fileInfo;
+		synchronized (FileStoreServer.class) {
+			FileInfoEntity fileInfo = new FileInfoEntity();
+			fileInfo.setId(fileStorePath.getUuid());
+			fileInfo.setBusinessId(businessId);
+			fileInfo.setFileName(fileName);
+			fileInfo.setFileSuffix(fileSuffix);
+			fileInfo.setFileSize(FileStorePath.formetFileSize(fileSize));
+			fileInfo.setRelativePath(fileStorePath.getRelativePath());
+			fileInfo.setUserId(userId);
+			fileInfo.setUploadTime(new Date());
+			fileInfo.setFileStatus(true);
+			fileInfo.setFileSort(fileInfoService.findMaxByBusinessId(businessId));
+			fileInfoService.store(fileInfo);
+			return fileInfo;
+		}
 	}
 	
 	/**
@@ -109,16 +111,18 @@ public class FileStoreServer {
 		try {
 			String reallyPath = FileStorePath.getRootDirectory(getRootDirectory())+fileInfo.getRelativePath();
 			FileStorePath.deleteFile(reallyPath);
+			synchronized (FileStoreServer.class) {
+				//存储文件到磁盘,并返回该文件的存储的路径信息
+				FileStorePath fileStorePath = storeFileToDisk(is,fileInfo.getFileName(), fileInfo.getFileSuffix());
+				fileInfo.setRelativePath(fileStorePath.getRelativePath());
+				fileInfo.setUploadTime(new Date());
+				fileInfo.setFileStatus(true);
+				fileInfo.setFileSort(fileInfoService.findMaxByBusinessId(fileInfo.getBusinessId()));
+				fileInfo.setFileSize(FileStorePath.formetFileSize(fileSize));
+				
+				fileInfoService.update(fileInfo);
+			}
 			
-			//存储文件到磁盘,并返回该文件的存储的路径信息
-			FileStorePath fileStorePath = storeFileToDisk(is,fileInfo.getFileName(), fileInfo.getFileSuffix());
-			fileInfo.setRelativePath(fileStorePath.getRelativePath());
-			fileInfo.setUploadTime(new Date());
-			fileInfo.setFileStatus(true);
-			fileInfo.setFileSort(fileInfoService.findMaxByBusinessId(fileInfo.getBusinessId()));
-			fileInfo.setFileSize(FileStorePath.formetFileSize(fileSize));
-			
-			fileInfoService.update(fileInfo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
