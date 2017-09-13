@@ -7,6 +7,22 @@
   </parent>
   <artifactId>show-attach-provider-web</artifactId>
   
+     <build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+  
   <dependencies>
 		<dependency>
 			<groupId>com.github.sgroschupf</groupId>
