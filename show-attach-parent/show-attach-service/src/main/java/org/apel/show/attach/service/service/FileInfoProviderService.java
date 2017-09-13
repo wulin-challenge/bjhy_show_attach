@@ -147,5 +147,12 @@ public interface FileInfoProviderService {
 	 * @param fileInfo
 	 */
 	public void isItEffective(FileInfo fileInfo);
+	
+	/**
+	 * 通过业务Id查找最大排序值
+	 * @param businessId
+	 * @return
+	 */
+	public Integer findMaxByBusinessId(String businessId);
 
 }

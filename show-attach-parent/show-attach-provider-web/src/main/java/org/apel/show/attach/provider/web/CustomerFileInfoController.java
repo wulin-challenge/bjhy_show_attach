@@ -16,6 +16,7 @@ import org.apel.gaia.commons.i18n.Message;
 import org.apel.gaia.commons.jqgrid.QueryParams;
 import org.apel.gaia.commons.pager.PageBean;
 import org.apel.gaia.container.boot.customize.multipart.FileUploadProgressListener;
+import org.apel.gaia.util.BeanUtils;
 import org.apel.gaia.util.jqgrid.JqGridUtil;
 import org.apel.show.attach.service.domain.FileInfo;
 import org.apel.show.attach.service.service.FileInfoProviderService;
@@ -50,6 +51,19 @@ public class CustomerFileInfoController {
 		PageBean pageBean = JqGridUtil.getPageBean(queryParams);
 		pageBean = fileInfoProviderService.findFileInfo(pageBean);
 		return pageBean;
+	}
+	
+	/**
+	 * 更新文件信息
+	 * @param newFileInfo
+	 * @return
+	 */
+	@RequestMapping(value="updateFileInfoById",method = RequestMethod.POST)
+	public @ResponseBody Message updateFileInfoById(FileInfo newFileInfo){
+		FileInfo fileInfo = fileInfoProviderService.findFileById(newFileInfo.getId());
+		BeanUtils.copyNotNullProperties(newFileInfo,fileInfo);
+		fileInfoProviderService.update(fileInfo);
+		return new Message(0,"更新成功");
 	}
 	
 	//批量删除

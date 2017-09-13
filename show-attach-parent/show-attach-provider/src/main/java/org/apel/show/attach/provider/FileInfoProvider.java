@@ -81,7 +81,6 @@ public class FileInfoProvider implements FileInfoProviderService{
 		}catch(Exception e){
 			logger.error(e.getMessage());
 		}
-		
 	}
 
 	@Override
@@ -197,6 +196,11 @@ public class FileInfoProvider implements FileInfoProviderService{
 	@Override
 	public void isItEffective(FileInfo fileInfo) {
 		isItEffective(fileInfo);
+	}
+
+	@Override
+	public Integer findMaxByBusinessId(String businessId) {
+		return fileInfoService.findMaxByBusinessId(businessId);
 	}
 
 }

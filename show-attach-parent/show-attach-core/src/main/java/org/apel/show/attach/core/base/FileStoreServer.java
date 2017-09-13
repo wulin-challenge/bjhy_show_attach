@@ -94,6 +94,7 @@ public class FileStoreServer {
 		fileInfo.setUserId(userId);
 		fileInfo.setUploadTime(new Date());
 		fileInfo.setFileStatus(true);
+		fileInfo.setFileSort(fileInfoService.findMaxByBusinessId(businessId));
 		fileInfoService.store(fileInfo);
 		return fileInfo;
 	}
@@ -114,6 +115,7 @@ public class FileStoreServer {
 			fileInfo.setRelativePath(fileStorePath.getRelativePath());
 			fileInfo.setUploadTime(new Date());
 			fileInfo.setFileStatus(true);
+			fileInfo.setFileSort(fileInfoService.findMaxByBusinessId(fileInfo.getBusinessId()));
 			fileInfo.setFileSize(FileStorePath.formetFileSize(fileSize));
 			
 			fileInfoService.update(fileInfo);

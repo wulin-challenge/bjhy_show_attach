@@ -47,6 +47,11 @@ public class FileInfoEntity implements Serializable {
 	private String fileSize;
 	
 	/**
+	 * 文件排序号
+	 */
+	private Integer fileSort;
+	
+	/**
 	 * 文件的相对路径
 	 */
 	private String relativePath;
@@ -131,6 +136,14 @@ public class FileInfoEntity implements Serializable {
 
 	public void setFileSize(String fileSize) {
 		this.fileSize = fileSize;
+	}
+
+	public Integer getFileSort() {
+		return fileSort;
+	}
+
+	public void setFileSort(Integer fileSort) {
+		this.fileSort = fileSort;
 	}
 	
 }

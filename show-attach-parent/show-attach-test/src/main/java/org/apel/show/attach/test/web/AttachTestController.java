@@ -20,8 +20,7 @@ public class AttachTestController {
 	@Reference(timeout=30000)
 	private FileInfoProviderService fileInfoProviderService;
 	
-	@RequestMapping(value="index",method=RequestMethod.GET)
-	
+	@RequestMapping(value="index",method={RequestMethod.GET,RequestMethod.POST})
 	public String index(){
 //		System.out.println();
 //		List<FileInfo> findByBusinessId = fileInfoProviderService.findByBusinessId("111111");

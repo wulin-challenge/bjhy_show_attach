@@ -30,6 +30,11 @@ public class FileInfo implements Serializable {
 	private String fileName;
 	
 	/**
+	 * 文件排序号
+	 */
+	private Integer fileSort;
+	
+	/**
 	 * 文件的后缀
 	 */
 	private String fileSuffix;
@@ -124,6 +129,14 @@ public class FileInfo implements Serializable {
 
 	public void setFileSize(String fileSize) {
 		this.fileSize = fileSize;
+	}
+
+	public Integer getFileSort() {
+		return fileSort;
+	}
+
+	public void setFileSort(Integer fileSort) {
+		this.fileSort = fileSort;
 	}
 	
 }

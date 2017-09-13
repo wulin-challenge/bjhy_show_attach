@@ -67,8 +67,19 @@ public class FileInfoServiceImpl implements FileInfoService{
 
 	@Override
 	public void findFileInfo(PageBean pageBean) {
-		String hql =  "select o.id,o.businessId,o.userId,o.fileName,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime from FileInfoEntity o where 1=1 ";
+		String hql =  "select o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime from FileInfoEntity o where 1=1 order by o.fileSort desc";
 		fileInfoRepository.doPager(pageBean, hql);
 		System.out.println();
+	}
+
+	@Override
+	public Integer findMaxByBusinessId(String businessId) {
+		Integer findMaxByBusinessId = fileInfoRepository.findMaxByBusinessId(businessId);
+		if(findMaxByBusinessId == null || findMaxByBusinessId ==0){
+			findMaxByBusinessId = 1;
+		}else{
+			findMaxByBusinessId +=1;
+		}
+		return findMaxByBusinessId;
 	}
 }

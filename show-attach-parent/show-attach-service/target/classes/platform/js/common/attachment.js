@@ -24,6 +24,9 @@ var Attachment = function(currentElement,option){
 	
 	var attachVue = {};
 	
+	//当前编辑行
+	var currentEditId = null;
+	
 	/**
 	 * 入口
 	 */
@@ -210,8 +213,15 @@ var Attachment = function(currentElement,option){
 			html+= "<a href='javascript:;' class='first-file'>上传文件 <input type='file' name='uploadFile' id='upload-file-id'></a>";
 			html+= "</form>";
 			html+= "</div>";
+			
 			html+= "<div class='first-del-div' style='"+showButton('batchDelete')+"'><a id='first-batch-del-id' class='first-del' href='javascript:;'>批量删除</a></div>";
+			
+			html+= "<div class='first-edit-row-div' style='"+showButton('rowEdit')+"'><a id='first-edit-row-div-id' class='first-edit-row-div-class' href='javascript:;'>行编辑</a></div>";
+			html+= "<div class='first-save-row-div' style='"+showButton('rowSave')+"'><a id='first-save-row-div-id' class='first-save-row-div-class' href='javascript:;'>行保存</a></div>";
+			html+= "<div class='first-cancel-row-div' style='"+showButton('rowCancel')+"'><a id='first-cancel-row-div-id' class='first-cancel-row-div-class' href='javascript:;'>行取消</a></div>";
+			
 			html+= "</div>";
+			
 			html+= "<div class='first-bottom'>";
 			html+= "<table id='upload-table-List'></table>";
 			html+= "<div id='upload-table-pager'></div>";
@@ -238,9 +248,20 @@ var Attachment = function(currentElement,option){
 		$(".first-file input").css({"position":"absolute","font-size":"12px","right":"0","top":"0","opacity":"0"});
 		$(".first-file:hover").css({"background":"#AADFFD","border-color":"#78C3F3","color":"#004974","text-decoration":"none"});
 		
-		$(".first-del-div").css({"float":"left","height":getPercentOfPX(option.height,0.12)});
+		$(".first-del-div").css({"float":"left","height":getPercentOfPX(option.height,0.12),"width":getAndWidth(option.batch_delete_button_width,30)+"px"});
 		$(".first-del").css({"cursor":"pointer","width":option.batch_delete_button_width+"px","height":+option.batch_delete_button_height+"px","font-size":"12px","display": "inline-block","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
-//		$(".el-button").css({"padding":"0px 0px","font-size":"1pt"});
+		
+		$(".first-edit-row-div").css({"float":"left","height":getPercentOfPX(option.height,0.12),"width":getAndWidth(option.row_edit_button_width,30)+"px"});
+		$(".first-edit-row-div-class").css({"cursor":"pointer","width":option.row_edit_button_width+"px","height":+option.row_edit_button_height+"px","font-size":"12px","display": "inline-block","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
+		
+		$(".first-save-row-div").css({"float":"left","height":getPercentOfPX(option.height,0.12),"width":getAndWidth(option.row_save_button_width,30)+"px"});
+		$(".first-save-row-div-class").css({"cursor":"pointer","width":option.row_save_button_width+"px","height":+option.row_save_button_height+"px","font-size":"12px","display": "inline-block","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
+		
+		$(".first-cancel-row-div").css({"float":"left","height":getPercentOfPX(option.height,0.12),"width":getAndWidth(option.row_cancel_button_width,30)+"px"});
+		$(".first-cancel-row-div-class").css({"cursor":"pointer","width":option.row_cancel_button_width+"px","height":+option.row_cancel_button_height+"px","font-size":"12px","display": "inline-block","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
+		
+		
+		$(".el-button").css({"padding":"0px 0px","font-size":"1pt"});
 	}
 	
 	/**
@@ -264,14 +285,20 @@ var Attachment = function(currentElement,option){
 		var defaultOptions = {
 				width:700,
 				height:400,
-				upload_button_width:"59.99",
+				upload_button_width:"59.99", //上传按钮
 				upload_button_height:"16",
-				batch_delete_button_width:"59.99",
+				batch_delete_button_width:"50", //批量删除按钮
 				batch_delete_button_height:"16",
+				row_edit_button_width:"39.99", //行编辑按钮
+				row_edit_button_height:"16",
+				row_save_button_width:"39.99", //行保存
+				row_save_button_height:"16",
+				row_cancel_button_width:"39.99", //行取消
+				row_cancel_button_height:"16",
 				userId:"",
 				businessId:"",
 				upload_url:http_attachment_url + "/customerFileInfo/fileUpload",
-				buttonAuthority:['upload','download','showFile','batchDelete','delete']
+				buttonAuthority:['upload','download','showFile','batchDelete','delete','rowEdit','rowSave','rowCancel']
 		};
 		return defaultOptions;
 	}
@@ -315,6 +342,16 @@ var Attachment = function(currentElement,option){
 	}
 	
 	/**
+	 * 将两个数进行相加
+	 */
+	var getAndWidth = function(width1,width2){
+		width1 = parseFloat(width1);
+		width2 = parseFloat(width2);
+		var width = width1+width2;
+		return width;
+	}
+	
+	/**
 	 * 得到grid的filters
 	 */
 	var getGridFilters = function(){
@@ -336,10 +373,12 @@ var Attachment = function(currentElement,option){
 		        width:getPercent(option.width,0.997),
 				height:getPercent(option.height,0.76),
 		        mtype: "GET",
+//		        cellEdit:true,
 		        multiselect: true,
-		        colNames: ['id','名称','后缀','大小','上传日期','操作'],
+		        colNames: ['id','序号','名称','后缀','大小','上传日期','操作'],
 		        colModel: [
 		            { name: "id", index:"id",hidden: true},
+		            { name: "fileSort",width:72, index:"fileSort", align:"center", sortable: false,editable : true},
 		            { name: "fileName",width:187, index:"fileName", align:"center", sortable: false},
 		            { name: "fileSuffix",width:72, index:"fileSuffix", align:"center", sortable: false},
 		            { name: "fileSize",width:72, index:"fileSize", align:"center", sortable: false},
@@ -356,7 +395,23 @@ var Attachment = function(currentElement,option){
 		        autoencode: true,
 		        gridComplete: function(){
 		        	bindGridEvent();
-		        }
+		        }//,
+//		        beforeSelectRow: function (rowid, e) {//设置行按钮
+//		            var $self = $(this), iCol, cm,
+//		                $td = $(e.target).closest("tr.jqgrow>td"),
+//		                $tr = $td.closest("tr.jqgrow"),
+//		                p = $self.jqGrid("getGridParam");
+//
+//		            if ($(e.target).is("input[type=checkbox]") && $td.length > 0) {
+//		               iCol = $.jgrid.getCellIndex($td[0]);
+//		               cm = p.colModel[iCol];
+//		               if (cm != null && cm.name === "cb") {
+//		                   // multiselect checkbox is clicked
+//		                   $self.jqGrid("setSelection", $tr.attr("id"), true ,e);
+//		               }
+//		            }
+//		            return false;
+//		        }
 		    };
 		
 		var grid = $("#upload-table-List").jqGrid(jqGrid);
@@ -396,6 +451,9 @@ var Attachment = function(currentElement,option){
 	var dealWithEvent = function(){
 		bindUploadEvent();//绑定上传事件
 		bindBatchDeleteAttachEvent();//绑定删除事件
+		bindRowEditEvent();//绑定行编辑事件
+		bindRowSaveEvent();//绑定行保存事件
+		bindRowCancelEvent();//绑定行取消事件
 	}
 	
 	/**
@@ -403,6 +461,12 @@ var Attachment = function(currentElement,option){
 	 */
 	var bindUploadEvent = function(){
 		$("#upload-file-id").change(function(){
+			//判断当前是否有编辑行
+			if(currentEditId != null){
+				toastr.warning("请请先保存当前编辑行!");
+				return null;
+			}
+			
 			fileChangedealWith(); //change事件触发后处理的方法
 			bandFileChangeEvent() //绑定file文件的change事件
 		});
@@ -484,6 +548,12 @@ var Attachment = function(currentElement,option){
 	 */
 	var bindDownloadAttachEvent = function(){
 		$(".first-custom-download").click(function(e){
+			//判断当前是否有编辑行
+			if(currentEditId != null){
+				toastr.warning("请请先保存当前编辑行!");
+				return null;
+			}
+			
 			var dataId = $(e.target).attr("dataId");
 			
 			window.location.href = http_attachment_url + "/customerFileInfo/downloadFile?fileId="+dataId;
@@ -495,6 +565,12 @@ var Attachment = function(currentElement,option){
 	 */
 	var bindShowFileAttachEvent = function(){
 		$(".first-custom-showFile").click(function(e){
+			//判断当前是否有编辑行
+			if(currentEditId != null){
+				toastr.warning("请请先保存当前编辑行!");
+				return null;
+			}
+			
 			var dataId = $(e.target).attr("dataId");
 			dataId = encodeCode(dataId);
 			
@@ -551,6 +627,13 @@ var Attachment = function(currentElement,option){
 	 */
 	var bindDeleteAttachEvent = function(){
 		$(".first-custom-delete").click(function(e){
+			
+			//判断当前是否有编辑行
+			if(currentEditId != null){
+				toastr.warning("请请先保存当前编辑行!");
+				return null;
+			}
+			
 			attachVue.singleDeleteParams = e;
 			attachVue.singleDelete=true;
 		});
@@ -562,6 +645,12 @@ var Attachment = function(currentElement,option){
 	var bindBatchDeleteAttachEvent = function(){
 		
 		$("#first-batch-del-id").click(function(){
+			//判断当前是否有编辑行
+			if(currentEditId != null){
+				toastr.warning("请请先保存当前编辑行!");
+				return null;
+			}
+			
 			var ids = fileShowGrid.jqGrid ('getGridParam', 'selarrrow');
 			if(ids.length == 0){
 				toastr.warning("请至少选择一条要删除的数据!");
@@ -594,6 +683,63 @@ var Attachment = function(currentElement,option){
 //		        	  }
 //		          }
 //		     });
+		});
+	}
+	
+	//绑定行编辑事件
+	var bindRowEditEvent = function(e){
+		$(".first-edit-row-div-class").click(function(e){
+			
+			//判断当前是否有编辑行
+			if(currentEditId != null){
+				toastr.warning("请请先保存当前编辑行!");
+				return null;
+			}
+			
+			var rowId = fileShowGrid.jqGrid ('getGridParam', 'selarrrow');
+			
+			if(rowId.length != 1){
+				toastr.warning("请有且只有选择一行数据!");
+				return;
+			}
+			
+			currentEditId = rowId[0];
+			// 选中行实际表示的位置
+			fileShowGrid.jqGrid('editRow', rowId);
+		});
+	}
+	
+	//绑定行保存事件
+	var bindRowSaveEvent = function(e){
+		$(".first-save-row-div-class").click(function(e){
+			
+			fileShowGrid.saveRow(currentEditId); 
+			var rowData = fileShowGrid.getRowData(currentEditId);
+			saveGridRowData(rowData);//保存行数据
+			currentEditId = null;
+		});
+	}
+	
+	/**
+	 * 保存行数据
+	 */
+	var saveGridRowData = function(rowData){
+		PlatformUI.ajax({
+			  url: http_attachment_url + "/customerFileInfo/updateFileInfoById",
+			  type: "post",
+			  data:{id:rowData['id'],fileSort:rowData['fileSort']},
+			  afterOperation: function(data){
+				  me.refreshGrid();
+			  }
+		  });
+	}
+	
+	//绑定行取消事件
+	var bindRowCancelEvent = function(e){
+		$(".first-cancel-row-div-class").click(function(e){
+			fileShowGrid.saveRow(currentEditId); 
+			currentEditId = null;
+			 me.refreshGrid();
 		});
 	}
 	

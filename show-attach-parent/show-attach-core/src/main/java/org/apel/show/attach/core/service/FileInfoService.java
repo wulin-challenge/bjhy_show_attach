@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apel.gaia.commons.pager.PageBean;
 import org.apel.show.attach.core.domain.FileInfoEntity;
+import org.springframework.data.jpa.repository.Query;
 
 public interface FileInfoService {
 	
@@ -44,6 +45,13 @@ public interface FileInfoService {
 	 * @param businessId
 	 */
 	public void deleteByBusinessId(String businessId);
+	
+	/**
+	 * 通过业务Id查找最大排序值
+	 * @param businessId
+	 * @return
+	 */
+	public Integer findMaxByBusinessId(String businessId);
 	
 	public void findFileInfo(PageBean pageBean);	
 
