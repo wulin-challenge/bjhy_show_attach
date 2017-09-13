@@ -261,7 +261,7 @@ var Attachment = function(currentElement,option){
 		$(".first-cancel-row-div-class").css({"cursor":"pointer","width":option.row_cancel_button_width+"px","height":+option.row_cancel_button_height+"px","font-size":"12px","display": "inline-block","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
 		
 		
-		$(".el-button").css({"padding":"0px 0px","font-size":"1pt"});
+//		$(".el-button").css({"padding":"0px 0px","font-size":"1pt"});
 	}
 	
 	/**
