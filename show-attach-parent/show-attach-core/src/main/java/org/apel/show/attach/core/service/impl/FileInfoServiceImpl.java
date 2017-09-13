@@ -74,12 +74,14 @@ public class FileInfoServiceImpl implements FileInfoService{
 
 	@Override
 	public Integer findMaxByBusinessId(String businessId) {
-		Integer findMaxByBusinessId = fileInfoRepository.findMaxByBusinessId(businessId);
-		if(findMaxByBusinessId == null || findMaxByBusinessId ==0){
-			findMaxByBusinessId = 1;
-		}else{
-			findMaxByBusinessId +=1;
+		synchronized (this) {
+			Integer findMaxByBusinessId = fileInfoRepository.findMaxByBusinessId(businessId);
+			if(findMaxByBusinessId == null || findMaxByBusinessId ==0){
+				findMaxByBusinessId = 1;
+			}else{
+				findMaxByBusinessId +=1;
+			}
+			return findMaxByBusinessId;
 		}
-		return findMaxByBusinessId;
 	}
 }

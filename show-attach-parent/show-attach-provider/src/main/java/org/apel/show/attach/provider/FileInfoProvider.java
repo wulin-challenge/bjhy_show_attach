@@ -84,7 +84,7 @@ public class FileInfoProvider implements FileInfoProviderService{
 	}
 
 	@Override
-	public PageBean findFileInfo(PageBean pageBean) {
+	public PageBean findFileInfo(PageBean pageBean){
 		fileInfoService.findFileInfo(pageBean);
 		List<Object> list = pageBean.getItems();
 		
