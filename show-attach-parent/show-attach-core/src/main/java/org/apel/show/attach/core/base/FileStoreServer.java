@@ -1,12 +1,18 @@
 package org.apel.show.attach.core.base;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apel.show.attach.core.domain.FileInfoEntity;
 import org.apel.show.attach.core.service.FileInfoService;
@@ -52,7 +58,7 @@ public class FileStoreServer {
 	 * @param fileSuffix 文件后缀
 	 * @return 返回文件的信息
 	 */
-	private FileInfoEntity storeFile(String businessId,InputStream is,long fileSize,String fileName,String fileSuffix){
+	public FileInfoEntity storeFile(String businessId,InputStream is,long fileSize,String fileName,String fileSuffix){
 		return storeFile(businessId, null, is,fileSize,fileName, fileSuffix);
 	}
 	
@@ -83,6 +89,38 @@ public class FileStoreServer {
 	private FileInfoEntity storeFile(String businessId,String userId,InputStream is,long fileSize,String fileName,String fileSuffix){
 		//存储文件到磁盘,并返回该文件的存储的路径信息
 		FileStorePath fileStorePath = storeFileToDisk(is,fileName, fileSuffix);
+		
+		synchronized (FileStoreServer.class) {
+			FileInfoEntity fileInfo = new FileInfoEntity();
+			fileInfo.setId(fileStorePath.getUuid());
+			fileInfo.setBusinessId(businessId);
+			fileInfo.setFileName(fileName);
+			fileInfo.setFileSuffix(fileSuffix);
+			fileInfo.setFileSize(FileStorePath.formetFileSize(fileSize));
+			fileInfo.setRelativePath(fileStorePath.getRelativePath());
+			fileInfo.setUserId(userId);
+			fileInfo.setUploadTime(new Date());
+			fileInfo.setFileStatus(true);
+			fileInfo.setFileSort(fileInfoService.findMaxByBusinessId(businessId));
+			fileInfoService.store(fileInfo);
+			return fileInfo;
+		}
+	}
+	
+	/**
+	 * 存储文件信息到数据库,文件到磁盘
+	 * @param businessId 业务Id
+	 * @param userId 用户Id
+	 * @param is 文件流
+	 * @param fileName 文件名
+	 * @param fileSuffix 文件后缀
+	 * @return 返回文件的信息
+	 */
+	public FileInfoEntity storeFile2(String businessId,String userId,InputStream is,long fileSize,String fileName,String fileSuffix){
+		//存储文件到磁盘,并返回该文件的存储的路径信息
+		Map<String, Object> storeFileToDisk2 = storeFileToDisk2(is,fileName, fileSuffix);
+		FileStorePath fileStorePath = (FileStorePath) storeFileToDisk2.get("fileStorePath");
+		fileSize = (long) storeFileToDisk2.get("fileSize");
 		
 		synchronized (FileStoreServer.class) {
 			FileInfoEntity fileInfo = new FileInfoEntity();
@@ -166,6 +204,33 @@ public class FileStoreServer {
 		}
 			
 		return fileStorePath;
+	}
+	
+	/**
+	 * 存储文件到磁盘,并返回该文件的存储的路径信息与文件大小返回来
+	 * @param is
+	 * @param rootDirectory
+	 * @param fileName
+	 * @param fileSuffix
+	 * @return
+	 */
+	private Map<String,Object> storeFileToDisk2(InputStream is,String fileName,String fileSuffix){
+		Map<String,Object> returnParmas = new HashMap<String,Object>();
+		FileStorePath fileStorePath = new FileStorePath(getRootDirectory(),fileName,fileSuffix);
+		//创建目录
+		fileStorePath.createDirectory(fileStorePath.getReallyDirecotory());
+		
+		try (BufferedInputStream bis = new BufferedInputStream(is,512*1024);
+			FileOutputStream fos = new FileOutputStream(fileStorePath.getReallyPath());
+			BufferedOutputStream bos = new BufferedOutputStream(fos,512*1024)){
+			long fileSize = IOUtils.copyLarge(bis, bos);
+			returnParmas.put("fileSize", fileSize);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		returnParmas.put("fileStorePath", fileStorePath);
+		return returnParmas;
 	}
 	
 	/**

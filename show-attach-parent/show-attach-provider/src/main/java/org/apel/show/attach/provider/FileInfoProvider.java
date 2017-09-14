@@ -117,6 +117,14 @@ public class FileInfoProvider implements FileInfoProviderService{
 		BeanUtils.copyProperties(fileInfoEntity,fileInfo);
 		return fileInfo;
 	}
+	
+	@Override
+	public FileInfo storeFile2(String businessId, String userId,String fileName, String fileSuffix,InputStream is) {
+		FileInfoEntity fileInfoEntity =  fileStoreServer.storeFile2(businessId, userId, is, 0, fileName, fileSuffix);
+		FileInfo fileInfo = new FileInfo();
+		BeanUtils.copyProperties(fileInfoEntity,fileInfo);
+		return fileInfo;
+	}
 
 	@Override
 	public FileInfo updateFile(FileInfo fileInfo, long fileSize,InputStream is) {

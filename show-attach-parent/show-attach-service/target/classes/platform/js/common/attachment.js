@@ -124,7 +124,7 @@ var Attachment = function(currentElement,option){
 					var ids = [dataId];
 					
 					PlatformUI.ajax({
-						url: http_attachment_url + "/customerFileInfo",
+						url: option.delete_single_url,
 						type: "post",
 						data: {_method:"delete",ids:ids},
 						afterOperation: function(){
@@ -157,7 +157,7 @@ var Attachment = function(currentElement,option){
 					}
 					
 					 PlatformUI.ajax({
-				        	url: http_attachment_url + "/customerFileInfo",
+				        	url: option.delete_batch_url,
 							type: "post",
 							data: {_method:"delete",ids:ids},
 							afterOperation: function(){
@@ -298,6 +298,9 @@ var Attachment = function(currentElement,option){
 				userId:"",
 				businessId:"",
 				upload_url:http_attachment_url + "/customerFileInfo/fileUpload",
+				delete_single_url:http_attachment_url + "/customerFileInfo",
+				delete_batch_url:http_attachment_url + "/customerFileInfo",
+				download_url: http_attachment_url + "/customerFileInfo/downloadFile",
 				buttonAuthority:['upload','download','showFile','batchDelete','delete','rowEdit','rowSave','rowCancel']
 		};
 		return defaultOptions;
@@ -501,12 +504,21 @@ var Attachment = function(currentElement,option){
 	var fileChangedealWith = function(){
 		if(checkFileSize($("#upload-file-id").get(0))){
 			attachVue.start();
+			alert(option.businessId);
+//			$.ajax({
+//				url:http_attachment_url + "/customerFileInfo/fileUpload",//?businessId="+option.businessId,
+//				type:"post",
+//			    data:{"businessId":option.businessId,"userId":option.userId}
+//			});
+//			
+//			return;
+			
 			$("#upload-form-id").ajaxSubmit({
-				url:http_attachment_url + "/customerFileInfo/fileUpload",
+				url:http_attachment_url + "/customerFileInfo/fileUpload?businessId="+option.businessId+"&userId="+option.userId,
 				type:"post",
 			    datatype:"text",  //这个datatype在不能设置,否则会出错
 				async:true,    
-				data:{"businessId":option.businessId,"userId":option.userId},
+				data:{"businessId":option.businessId,"userId":option.userId},//原生的spring的 multipart 可以这样传输
 				success:function(data){
 					data = eval("("+data+")");
 					if(data.result == 1){
@@ -531,7 +543,7 @@ var Attachment = function(currentElement,option){
 	
 	var checkFileSize = function(fileInput){
 		var checkResult = true;
-		var maxSize = 30 * 1024 * 1024;
+		var maxSize = 3000 * 1024 * 1024;
 		//火狐
         if (fileInput.files && fileInput.files[0]) {
 			if(fileInput.files[0].size>(maxSize)){
@@ -556,7 +568,7 @@ var Attachment = function(currentElement,option){
 			
 			var dataId = $(e.target).attr("dataId");
 			
-			window.location.href = http_attachment_url + "/customerFileInfo/downloadFile?fileId="+dataId;
+			window.location.href = option.download_url+"?fileId="+dataId;
 		});
 	}
 	

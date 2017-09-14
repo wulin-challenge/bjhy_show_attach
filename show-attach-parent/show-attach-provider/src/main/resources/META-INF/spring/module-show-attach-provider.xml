@@ -17,7 +17,7 @@
            http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
            http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-	<context:component-scan base-package="org.apel.show.attach.provider" />
+	<context:component-scan base-package="org.apel.show.attach" />
 	<dubbo:annotation />
 	 <!-- 提供方应用信息，用于计算依赖关系 -->
     <dubbo:application name="show-attach-provider"  />

@@ -504,12 +504,21 @@ var Attachment = function(currentElement,option){
 	var fileChangedealWith = function(){
 		if(checkFileSize($("#upload-file-id").get(0))){
 			attachVue.start();
+			alert(option.businessId);
+//			$.ajax({
+//				url:http_attachment_url + "/customerFileInfo/fileUpload",//?businessId="+option.businessId,
+//				type:"post",
+//			    data:{"businessId":option.businessId,"userId":option.userId}
+//			});
+//			
+//			return;
+			
 			$("#upload-form-id").ajaxSubmit({
-				url:http_attachment_url + "/customerFileInfo/fileUpload",
+				url:http_attachment_url + "/customerFileInfo/fileUpload?businessId="+option.businessId+"&userId="+option.userId,
 				type:"post",
 			    datatype:"text",  //这个datatype在不能设置,否则会出错
 				async:true,    
-				data:{"businessId":option.businessId,"userId":option.userId},
+				data:{"businessId":option.businessId,"userId":option.userId},//原生的spring的 multipart 可以这样传输
 				success:function(data){
 					data = eval("("+data+")");
 					if(data.result == 1){

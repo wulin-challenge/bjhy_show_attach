@@ -75,6 +75,17 @@ public interface FileInfoProviderService {
 	public FileInfo storeFile2(String businessId,String userId,String fileName,String fileSuffix,long fileSize,byte[] filebyteArray);
 	
 	/**
+	 * 存储文件信息到数据库,文件到磁盘
+	 * @param businessId 业务Id
+	 * @param userId 用户Id
+	 * @param is 文件流
+	 * @param fileName 文件名
+	 * @param fileSuffix 文件后缀
+	 * @return 返回文件的信息
+	 */
+	public FileInfo storeFile2(String businessId, String userId, String fileName,String fileSuffix, InputStream is);
+	
+	/**
 	 * 更新文件及文件在数据库的信息
 	 * @param fileInfo 要更新的文件信息
 	 * @param is 文件输入流
@@ -154,5 +165,6 @@ public interface FileInfoProviderService {
 	 * @return
 	 */
 	public Integer findMaxByBusinessId(String businessId);
+
 
 }

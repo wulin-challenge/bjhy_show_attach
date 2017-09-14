@@ -22,7 +22,7 @@ public class AttachTestController {
 	
 	@RequestMapping(value="index",method={RequestMethod.GET,RequestMethod.POST})
 	public String index(){
-//		System.out.println();
+		System.out.println();
 //		List<FileInfo> findByBusinessId = fileInfoProviderService.findByBusinessId("111111");
 //		List<FileInfo> findFileByBusinessId = fileInfoProviderService.findFileByBusinessId("111111");
 //		
