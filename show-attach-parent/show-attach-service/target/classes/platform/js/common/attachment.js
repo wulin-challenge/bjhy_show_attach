@@ -504,14 +504,6 @@ var Attachment = function(currentElement,option){
 	var fileChangedealWith = function(){
 		if(checkFileSize($("#upload-file-id").get(0))){
 			attachVue.start();
-			alert(option.businessId);
-//			$.ajax({
-//				url:http_attachment_url + "/customerFileInfo/fileUpload",//?businessId="+option.businessId,
-//				type:"post",
-//			    data:{"businessId":option.businessId,"userId":option.userId}
-//			});
-//			
-//			return;
 			
 			$("#upload-form-id").ajaxSubmit({
 				url:http_attachment_url + "/customerFileInfo/fileUpload?businessId="+option.businessId+"&userId="+option.userId,
