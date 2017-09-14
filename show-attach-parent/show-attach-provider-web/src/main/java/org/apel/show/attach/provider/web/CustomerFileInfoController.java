@@ -31,8 +31,6 @@ import org.apel.show.attach.provider.util.HttpClientUtil;
 import org.apel.show.attach.service.domain.FileInfo;
 import org.apel.show.attach.service.service.FileInfoProviderService;
 import org.apel.show.attach.service.util.UnZipStorePath;
-import org.apel.show.attach.service.util.UnZipStorePath.UnZipFileCallBack;
-import org.junit.internal.Throwables;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
