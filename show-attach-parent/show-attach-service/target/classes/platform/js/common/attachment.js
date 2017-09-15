@@ -210,7 +210,7 @@ var Attachment = function(currentElement,option){
 			html+= "<div class='first-top'>";
 			html+= "<div class='first-form' style='"+showButton('upload')+"'>";
 			html+= "<form id='upload-form-id'  action='"+option.upload_url+"' method='post' enctype='multipart/form-data'>";
-			html+= "<a href='javascript:;' class='first-file'>上传文件 <input type='file' name='uploadFile' id='upload-file-id'></a>";
+			html+= "<a href='javascript:;' class='first-file'>上传文件 <input type='file' multiple='' name='uploadFile' id='upload-file-id'></a>";
 			html+= "</form>";
 			html+= "</div>";
 			

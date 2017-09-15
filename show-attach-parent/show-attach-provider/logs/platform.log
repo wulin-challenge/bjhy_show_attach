@@ -1,31 +1,369 @@
-2017-09-15 15:00:50,010 INFO [Druid-ConnectionPool-Log-1451185] c.a.d.p.DruidDataSourceStatLoggerImpl [DruidDataSourceStatLoggerImpl.java : 77] {"url":"jdbc:mysql://192.168.0.94:3306/attach?useUnicode=true&characterEncoding=utf8&pinGlobalTxToPhysicalConnection=true","dbType":"mysql","name":"DataSource-1451185","activeCount":0,"poolingCount":1,"connectCount":0,"closeCount":0}
-2017-09-15 15:05:50,064 INFO [Druid-ConnectionPool-Log-1451185] c.a.d.p.DruidDataSourceStatLoggerImpl [DruidDataSourceStatLoggerImpl.java : 77] {"url":"jdbc:mysql://192.168.0.94:3306/attach?useUnicode=true&characterEncoding=utf8&pinGlobalTxToPhysicalConnection=true","dbType":"mysql","name":"DataSource-1451185","activeCount":0,"poolingCount":1,"connectCount":0,"closeCount":0}
-2017-09-15 15:10:50,078 INFO [Druid-ConnectionPool-Log-1451185] c.a.d.p.DruidDataSourceStatLoggerImpl [DruidDataSourceStatLoggerImpl.java : 77] {"url":"jdbc:mysql://192.168.0.94:3306/attach?useUnicode=true&characterEncoding=utf8&pinGlobalTxToPhysicalConnection=true","dbType":"mysql","name":"DataSource-1451185","activeCount":0,"poolingCount":1,"connectCount":0,"closeCount":0}
-2017-09-15 15:15:50,088 INFO [Druid-ConnectionPool-Log-1451185] c.a.d.p.DruidDataSourceStatLoggerImpl [DruidDataSourceStatLoggerImpl.java : 77] {"url":"jdbc:mysql://192.168.0.94:3306/attach?useUnicode=true&characterEncoding=utf8&pinGlobalTxToPhysicalConnection=true","dbType":"mysql","name":"DataSource-1451185","activeCount":0,"poolingCount":1,"connectCount":0,"closeCount":0}
-2017-09-15 15:20:50,091 INFO [Druid-ConnectionPool-Log-1451185] c.a.d.p.DruidDataSourceStatLoggerImpl [DruidDataSourceStatLoggerImpl.java : 77] {"url":"jdbc:mysql://192.168.0.94:3306/attach?useUnicode=true&characterEncoding=utf8&pinGlobalTxToPhysicalConnection=true","dbType":"mysql","name":"DataSource-1451185","activeCount":0,"poolingCount":1,"connectCount":0,"closeCount":0}
-2017-09-15 15:25:50,101 INFO [Druid-ConnectionPool-Log-1451185] c.a.d.p.DruidDataSourceStatLoggerImpl [DruidDataSourceStatLoggerImpl.java : 77] {"url":"jdbc:mysql://192.168.0.94:3306/attach?useUnicode=true&characterEncoding=utf8&pinGlobalTxToPhysicalConnection=true","dbType":"mysql","name":"DataSource-1451185","activeCount":0,"poolingCount":1,"connectCount":0,"closeCount":0}
-2017-09-15 15:28:46,819 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 497] qlString = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o WHERE 1=1 ORDER BY o.fileSort DESC}
-2017-09-15 15:28:46,822 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 701] conIndex = {130}
-2017-09-15 15:28:46,823 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 706] 条件前的?个数：{0}
-2017-09-15 15:28:46,824 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 707] 条件后的?个数：{0}
-2017-09-15 15:28:46,825 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 708] 条件的起始位置：{0}
-2017-09-15 15:28:46,826 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 674] condition = { AND  (  ( businessId = ? )  ) }
-2017-09-15 15:28:46,827 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 482] order = { ORDER BY uploadTime DESC}
-2017-09-15 15:28:46,828 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 420] list_ql = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC , uploadTime DESC}
-2017-09-15 15:28:46,829 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 152] count_ql = {SELECT count(*) FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC}
-2017-09-15 15:28:46,834 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 737] executeCount totalRows = {56}
-2017-09-15 15:28:46,843 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 393] firstFromIndex={108}
-2017-09-15 15:28:46,845 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 395] prefixFrom={SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime }
-2017-09-15 15:28:59,356 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 497] qlString = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o WHERE 1=1 ORDER BY o.fileSort DESC}
-2017-09-15 15:28:59,356 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 701] conIndex = {130}
-2017-09-15 15:28:59,356 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 706] 条件前的?个数：{0}
-2017-09-15 15:28:59,356 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 707] 条件后的?个数：{0}
-2017-09-15 15:28:59,356 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 708] 条件的起始位置：{0}
-2017-09-15 15:28:59,356 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 674] condition = { AND  (  ( businessId = ? )  ) }
-2017-09-15 15:28:59,356 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 482] order = { ORDER BY uploadTime DESC}
-2017-09-15 15:28:59,356 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 420] list_ql = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC , uploadTime DESC}
-2017-09-15 15:28:59,356 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 152] count_ql = {SELECT count(*) FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC}
-2017-09-15 15:28:59,356 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 737] executeCount totalRows = {56}
-2017-09-15 15:28:59,371 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 393] firstFromIndex={108}
-2017-09-15 15:28:59,371 INFO [15868922@qtp-23487334-197] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 395] prefixFrom={SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime }
-2017-09-15 15:30:50,110 INFO [Druid-ConnectionPool-Log-1451185] c.a.d.p.DruidDataSourceStatLoggerImpl [DruidDataSourceStatLoggerImpl.java : 77] {"url":"jdbc:mysql://192.168.0.94:3306/attach?useUnicode=true&characterEncoding=utf8&pinGlobalTxToPhysicalConnection=true","dbType":"mysql","name":"DataSource-1451185","activeCount":0,"activePeak":1,"activePeakTime":"2017-09-15 15:28:46","poolingCount":1,"poolingPeak":1,"poolingPeakTime":"2017-09-15 15:28:46","connectCount":4,"closeCount":4,"executeCount":7,"commitCount":4,"pstmtCacheHitCount":6,"pstmtCacheMissCount":1,"startTransactionCount":4,"transactionHistogram":[0,2,1,1],"connectionHoldTimeHistogram":[0,0,3,1],"sqlList":[{"sql":"select fileinfoen0_.id as id1_0_0_, fileinfoen0_.businessId as business2_0_0_, fileinfoen0_.fileName as fileName3_0_0_, fileinfoen0_.fileSize as fileSize4_0_0_, fileinfoen0_.fileSort as fileSort5_0_0_, fileinfoen0_.fileStatus as fileStat6_0_0_, fileinfoen0_.fileSuffix as fileSuff7_0_0_, fileinfoen0_.relativePath as relative8_0_0_, fileinfoen0_.uploadTime as uploadTi9_0_0_, fileinfoen0_.userId as userId10_0_0_ from base_file_info fileinfoen0_ where fileinfoen0_.id=?","executeCount":2,"executeMillisMax":2,"executeMillisTotal":4,"executeHistogram":[0,2],"executeAndResultHoldHistogram":[2],"concurrentMax":1,"fetchRowCount":1,"fetchRowHistogram":[0,2],"inTransactionCount":2},{"sql":"update base_file_info set businessId=?, fileName=?, fileSize=?, fileSort=?, fileStatus=?, fileSuffix=?, relativePath=?, uploadTime=?, userId=? where id=?","executeCount":1,"executeMillisMax":3,"executeMillisTotal":3,"executeHistogram":[0,1],"executeAndResultHoldHistogram":[0,1],"concurrentMax":1,"updateCount":1,"updateCountMax":1,"updateHistogram":[0,1],"inTransactionCount":1},{"sql":"select count(*) as col_0_0_ from base_file_info fileinfoen0_ where 1=1 and fileinfoen0_.businessId=? order by fileinfoen0_.fileSort DESC","executeCount":2,"executeMillisMax":2,"executeMillisTotal":4,"executeHistogram":[0,2],"executeAndResultHoldHistogram":[2],"concurrentMax":1,"fetchRowCount":1,"fetchRowHistogram":[0,2],"inTransactionCount":2},{"sql":"select fileinfoen0_.id as col_0_0_, fileinfoen0_.businessId as col_1_0_, fileinfoen0_.userId as col_2_0_, fileinfoen0_.fileName as col_3_0_, fileinfoen0_.fileSort as col_4_0_, fileinfoen0_.fileSuffix as col_5_0_, fileinfoen0_.fileSize as col_6_0_, fileinfoen0_.relativePath as col_7_0_, fileinfoen0_.uploadTime as col_8_0_ from base_file_info fileinfoen0_ where 1=1 and fileinfoen0_.businessId=? order by fileinfoen0_.fileSort DESC, fileinfoen0_.uploadTime DESC limit ?","executeCount":1,"executeMillisMax":3,"executeMillisTotal":3,"executeHistogram":[0,1],"executeAndResultHoldHistogram":[1],"concurrentMax":1,"fetchRowCount":10,"fetchRowHistogram":[0,0,1],"inTransactionCount":1},{"sql":"select fileinfoen0_.id as col_0_0_, fileinfoen0_.businessId as col_1_0_, fileinfoen0_.userId as col_2_0_, fileinfoen0_.fileName as col_3_0_, fileinfoen0_.fileSort as col_4_0_, fileinfoen0_.fileSuffix as col_5_0_, fileinfoen0_.fileSize as col_6_0_, fileinfoen0_.relativePath as col_7_0_, fileinfoen0_.uploadTime as col_8_0_ from base_file_info fileinfoen0_ where 1=1 and fileinfoen0_.businessId=? order by fileinfoen0_.fileSort DESC, fileinfoen0_.uploadTime DESC limit ?, ?","executeCount":1,"executeMillisMax":3,"executeMillisTotal":3,"executeHistogram":[0,1],"executeAndResultHoldHistogram":[1],"concurrentMax":1,"fetchRowCount":6,"fetchRowHistogram":[0,1],"inTransactionCount":1}]}
+2017-09-15 16:03:48,465 INFO [Druid-ConnectionPool-Log-12882270] c.a.d.p.DruidDataSourceStatLoggerImpl [DruidDataSourceStatLoggerImpl.java : 77] {"url":"jdbc:mysql://192.168.0.94:3306/attach?useUnicode=true&characterEncoding=utf8&pinGlobalTxToPhysicalConnection=true","dbType":"mysql","name":"DataSource-12882270","activeCount":0,"activePeak":2,"activePeakTime":"2017-09-15 15:58:55","poolingCount":2,"poolingPeak":2,"poolingPeakTime":"2017-09-15 15:58:55","connectCount":4,"closeCount":4,"notEmptyWaitCount":1,"notEmptyWaitMillis":25,"physicalConnectCount":1,"connectionHoldTimeHistogram":[0,1,0,3]}
+2017-09-15 16:08:48,492 INFO [Druid-ConnectionPool-Log-12882270] c.a.d.p.DruidDataSourceStatLoggerImpl [DruidDataSourceStatLoggerImpl.java : 77] {"url":"jdbc:mysql://192.168.0.94:3306/attach?useUnicode=true&characterEncoding=utf8&pinGlobalTxToPhysicalConnection=true","dbType":"mysql","name":"DataSource-12882270","activeCount":0,"poolingCount":1,"connectCount":0,"closeCount":0,"physicalCloseCount":1}
+2017-09-15 16:08:49,543 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 497] qlString = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o WHERE 1=1 ORDER BY o.fileSort DESC}
+2017-09-15 16:08:49,543 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 701] conIndex = {130}
+2017-09-15 16:08:49,559 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 706] 条件前的?个数：{0}
+2017-09-15 16:08:49,559 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 707] 条件后的?个数：{0}
+2017-09-15 16:08:49,559 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 708] 条件的起始位置：{0}
+2017-09-15 16:08:49,559 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 674] condition = { AND  (  ( businessId = ? )  ) }
+2017-09-15 16:08:49,559 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 482] order = { ORDER BY uploadTime DESC}
+2017-09-15 16:08:49,559 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 420] list_ql = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC , uploadTime DESC}
+2017-09-15 16:08:49,559 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 152] count_ql = {SELECT count(*) FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC}
+2017-09-15 16:08:49,669 WARN [19157352@qtp-3417769-186] o.h.hql.internal.ast.HqlSqlWalker [HqlSqlWalker.java : 992] [DEPRECATION] Encountered positional parameter near line 1, column 107 in HQL: [SELECT count(*) FROM org.apel.show.attach.core.domain.FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC].  Positional parameter are considered deprecated; use named parameters or JPA-style positional parameters instead.
+2017-09-15 16:08:50,436 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 737] executeCount totalRows = {56}
+2017-09-15 16:08:50,467 WARN [19157352@qtp-3417769-186] o.h.hql.internal.ast.HqlSqlWalker [HqlSqlWalker.java : 992] [DEPRECATION] Encountered positional parameter near line 1, column 199 in HQL: [SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM org.apel.show.attach.core.domain.FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC , uploadTime DESC].  Positional parameter are considered deprecated; use named parameters or JPA-style positional parameters instead.
+2017-09-15 16:08:50,498 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 393] firstFromIndex={108}
+2017-09-15 16:08:50,498 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 395] prefixFrom={SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime }
+2017-09-15 16:11:07,743 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 497] qlString = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o WHERE 1=1 ORDER BY o.fileSort DESC}
+2017-09-15 16:11:07,745 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 701] conIndex = {130}
+2017-09-15 16:11:07,746 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 706] 条件前的?个数：{0}
+2017-09-15 16:11:07,747 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 707] 条件后的?个数：{0}
+2017-09-15 16:11:07,748 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 708] 条件的起始位置：{0}
+2017-09-15 16:11:07,749 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 674] condition = { AND  (  ( businessId = ? )  ) }
+2017-09-15 16:11:07,750 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 482] order = { ORDER BY uploadTime DESC}
+2017-09-15 16:11:07,751 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 420] list_ql = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC , uploadTime DESC}
+2017-09-15 16:11:07,752 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 152] count_ql = {SELECT count(*) FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC}
+2017-09-15 16:11:07,758 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 737] executeCount totalRows = {56}
+2017-09-15 16:11:07,775 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 393] firstFromIndex={108}
+2017-09-15 16:11:07,776 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 395] prefixFrom={SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime }
+2017-09-15 16:11:29,264 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=F7D8E6729BB24A7A92E2B30767B899B1
+2017-09-15 16:11:29,311 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=2E3CC550C285416C9E31A50A4DAB5BB5
+2017-09-15 16:11:29,373 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=4D424415519140ECBD12DDC93884B701
+2017-09-15 16:11:29,425 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=F18217A6D07F442280A4D5FD37924D62
+2017-09-15 16:11:29,482 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=59EF7757B90542DB89CC7FE512138C27
+2017-09-15 16:11:29,552 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=544E2658D34F414E965A45E3265CCFFD
+2017-09-15 16:11:29,598 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=FD105530259846FEB5DE11918E78215A
+2017-09-15 16:11:29,661 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=0F3158AE8F38480C90A4C9C5C0619DE5
+2017-09-15 16:11:29,708 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=1AA18D6F093149F7A5EFC15ABF7EADE2
+2017-09-15 16:11:29,755 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=0CE95FB1FA5A4ED094B3269CA7DA8599
+2017-09-15 16:11:29,860 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 497] qlString = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o WHERE 1=1 ORDER BY o.fileSort DESC}
+2017-09-15 16:11:29,861 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 701] conIndex = {130}
+2017-09-15 16:11:29,862 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 706] 条件前的?个数：{0}
+2017-09-15 16:11:29,863 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 707] 条件后的?个数：{0}
+2017-09-15 16:11:29,864 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 708] 条件的起始位置：{0}
+2017-09-15 16:11:29,865 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 674] condition = { AND  (  ( businessId = ? )  ) }
+2017-09-15 16:11:29,866 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 482] order = { ORDER BY uploadTime DESC}
+2017-09-15 16:11:29,867 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 420] list_ql = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC , uploadTime DESC}
+2017-09-15 16:11:29,868 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 152] count_ql = {SELECT count(*) FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC}
+2017-09-15 16:11:29,872 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 737] executeCount totalRows = {46}
+2017-09-15 16:11:29,885 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 393] firstFromIndex={108}
+2017-09-15 16:11:29,886 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 395] prefixFrom={SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime }
+2017-09-15 16:11:33,219 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=8F81FFBE0C7147D88CDFF57FE874410D
+2017-09-15 16:11:33,264 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=D0DB14D36D124244810F1BEAAC71AE7B
+2017-09-15 16:11:33,335 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=EF5D9B1958FD43ABB658FE5C55947F0A
+2017-09-15 16:11:33,386 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=2285DF803F564BB9B9650DF7818B0666
+2017-09-15 16:11:33,449 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=EF40074F961146A8A8E5B18F83F5DA96
+2017-09-15 16:11:33,513 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=A3F10E1368194019A228D5CAC987A2F2
+2017-09-15 16:11:33,561 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=776A5CD5E7D743CBBA352DFE795EE057
+2017-09-15 16:11:33,609 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=D37FCF8E2EBA4AA39F8BE8240CABE0F5
+2017-09-15 16:11:33,658 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=B2EB9434F2A8420E99271C605AFC8B72
+2017-09-15 16:11:33,708 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=88FCA2B877474A8D9E94949475D83F86
+2017-09-15 16:11:33,780 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 497] qlString = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o WHERE 1=1 ORDER BY o.fileSort DESC}
+2017-09-15 16:11:33,781 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 701] conIndex = {130}
+2017-09-15 16:11:33,782 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 706] 条件前的?个数：{0}
+2017-09-15 16:11:33,783 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 707] 条件后的?个数：{0}
+2017-09-15 16:11:33,784 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 708] 条件的起始位置：{0}
+2017-09-15 16:11:33,785 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 674] condition = { AND  (  ( businessId = ? )  ) }
+2017-09-15 16:11:33,786 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 482] order = { ORDER BY uploadTime DESC}
+2017-09-15 16:11:33,787 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 420] list_ql = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC , uploadTime DESC}
+2017-09-15 16:11:33,788 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 152] count_ql = {SELECT count(*) FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC}
+2017-09-15 16:11:33,792 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 737] executeCount totalRows = {36}
+2017-09-15 16:11:33,804 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 393] firstFromIndex={108}
+2017-09-15 16:11:33,805 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 395] prefixFrom={SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime }
+2017-09-15 16:11:35,822 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=A4D4DD62B0DB4E1F9DA33D4752053F7B
+2017-09-15 16:11:35,870 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=6C48D2AF05944CFBB541DB30C95B586F
+2017-09-15 16:11:35,922 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=91B04BD33FC646ABB54225230730E959
+2017-09-15 16:11:35,995 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=1B02665E88DA49B88C56787ED34C2410
+2017-09-15 16:11:36,049 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=BFD40659E6F046828AF3EB195B36D7AD
+2017-09-15 16:11:36,094 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=6574475880BE48FA85DEF5C1BEBAFA93
+2017-09-15 16:11:36,144 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=144FD06EDC9341B3A519BDCED52C980D
+2017-09-15 16:11:36,197 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=B8D9D4CE3D444E2F9A4654E833F01D7D
+2017-09-15 16:11:36,244 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=BF9A105F6954406D93275298E6A658A6
+2017-09-15 16:11:36,305 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=BFA3A907A6B3429DA54B7342D298C3B2
+2017-09-15 16:11:36,373 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 497] qlString = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o WHERE 1=1 ORDER BY o.fileSort DESC}
+2017-09-15 16:11:36,374 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 701] conIndex = {130}
+2017-09-15 16:11:36,375 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 706] 条件前的?个数：{0}
+2017-09-15 16:11:36,376 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 707] 条件后的?个数：{0}
+2017-09-15 16:11:36,378 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 708] 条件的起始位置：{0}
+2017-09-15 16:11:36,379 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 674] condition = { AND  (  ( businessId = ? )  ) }
+2017-09-15 16:11:36,380 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 482] order = { ORDER BY uploadTime DESC}
+2017-09-15 16:11:36,381 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 420] list_ql = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC , uploadTime DESC}
+2017-09-15 16:11:36,382 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 152] count_ql = {SELECT count(*) FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC}
+2017-09-15 16:11:36,387 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 737] executeCount totalRows = {26}
+2017-09-15 16:11:36,397 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 393] firstFromIndex={108}
+2017-09-15 16:11:36,398 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 395] prefixFrom={SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime }
+2017-09-15 16:11:40,016 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=3DDE4938E20A4DD2A15C95250582D3B5
+2017-09-15 16:11:40,061 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=72CAFEA4E59945719B16EAF6696FC188
+2017-09-15 16:11:40,108 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=7E1C171A6B2441C581E9C2F8F48237D8
+2017-09-15 16:11:40,157 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=881E6AE706EA4B84A1940D23BB8340C4
+2017-09-15 16:11:40,227 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=57A562E636A94093BF95E4300792ECE9
+2017-09-15 16:11:40,284 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=62B062560CA34AA4B083817864B555F3
+2017-09-15 16:11:40,333 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=21BC0440249D41168711C673B0DA40CA
+2017-09-15 16:11:40,379 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=356CCC8022A94D7C8F49BD9FB534C24A
+2017-09-15 16:11:40,428 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=6C8D3AF6C03A4317B3260BBAC4EE1222
+2017-09-15 16:11:40,473 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=ADA15DEA398542F0A0DF2FEBFA20D597
+2017-09-15 16:11:40,560 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 497] qlString = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o WHERE 1=1 ORDER BY o.fileSort DESC}
+2017-09-15 16:11:40,561 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 701] conIndex = {130}
+2017-09-15 16:11:40,562 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 706] 条件前的?个数：{0}
+2017-09-15 16:11:40,562 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 707] 条件后的?个数：{0}
+2017-09-15 16:11:40,563 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 708] 条件的起始位置：{0}
+2017-09-15 16:11:40,564 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 674] condition = { AND  (  ( businessId = ? )  ) }
+2017-09-15 16:11:40,565 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 482] order = { ORDER BY uploadTime DESC}
+2017-09-15 16:11:40,566 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 420] list_ql = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC , uploadTime DESC}
+2017-09-15 16:11:40,567 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 152] count_ql = {SELECT count(*) FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC}
+2017-09-15 16:11:40,572 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 737] executeCount totalRows = {16}
+2017-09-15 16:11:40,582 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 393] firstFromIndex={108}
+2017-09-15 16:11:40,584 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 395] prefixFrom={SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime }
+2017-09-15 16:11:42,423 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=DF1A5F5D69A34705AE95532B88A0A6D7
+2017-09-15 16:11:42,465 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=97F70F77452A47858BF00EE7720E23FE
+2017-09-15 16:11:42,513 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=691083A0AB5044B399DC1A6E7B9891B2
+2017-09-15 16:11:42,559 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=51772FF0E23B4350994D677C262A1488
+2017-09-15 16:11:42,604 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=FC965E353C874E47B9C36E3F99B307FF
+2017-09-15 16:11:42,654 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=67FE02B0C9B94F3E947850B9DB275FFE
+2017-09-15 16:11:42,699 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=250BA6F689B14AB6933CCD7F458CA855
+2017-09-15 16:11:42,743 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=7F2F3D8C237E4CC6A55F369B736C7037
+2017-09-15 16:11:42,785 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=F6EBBBD5956C4D88AD370D1040E49CA6
+2017-09-15 16:11:42,830 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=B61ACFFCFE5D4B5EBCD2BC9ED0D3763F
+2017-09-15 16:11:42,898 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 497] qlString = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o WHERE 1=1 ORDER BY o.fileSort DESC}
+2017-09-15 16:11:42,899 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 701] conIndex = {130}
+2017-09-15 16:11:42,900 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 706] 条件前的?个数：{0}
+2017-09-15 16:11:42,901 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 707] 条件后的?个数：{0}
+2017-09-15 16:11:42,902 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 708] 条件的起始位置：{0}
+2017-09-15 16:11:42,903 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 674] condition = { AND  (  ( businessId = ? )  ) }
+2017-09-15 16:11:42,904 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 482] order = { ORDER BY uploadTime DESC}
+2017-09-15 16:11:42,905 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 420] list_ql = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC , uploadTime DESC}
+2017-09-15 16:11:42,906 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 152] count_ql = {SELECT count(*) FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC}
+2017-09-15 16:11:42,910 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 737] executeCount totalRows = {6}
+2017-09-15 16:11:42,917 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 393] firstFromIndex={108}
+2017-09-15 16:11:42,918 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 395] prefixFrom={SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime }
+2017-09-15 16:11:46,707 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=057BB5199D2A4D3FA27A1D01ED00DA5C
+2017-09-15 16:11:46,748 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=78CFAF8579E14B29B782B720DF6BA576
+2017-09-15 16:11:46,795 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=56F9D694D47043B69CC133805DF8B9FA
+2017-09-15 16:11:46,842 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=76A0E3576D7446DA8B9E3FD8A3C1C1C6
+2017-09-15 16:11:46,891 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=3A509354CCF34305BD50B38902C84C26
+2017-09-15 16:11:46,941 INFO [19157352@qtp-3417769-186] o.a.s.a.c.s.impl.FileInfoServiceImpl [FileInfoServiceImpl.java : 50] 当前数据不存在,id=834F691057A543FFB3CB43D34293F315
+2017-09-15 16:11:47,018 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 497] qlString = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o WHERE 1=1 ORDER BY o.fileSort DESC}
+2017-09-15 16:11:47,020 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 701] conIndex = {130}
+2017-09-15 16:11:47,021 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 706] 条件前的?个数：{0}
+2017-09-15 16:11:47,023 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 707] 条件后的?个数：{0}
+2017-09-15 16:11:47,023 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 708] 条件的起始位置：{0}
+2017-09-15 16:11:47,024 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 674] condition = { AND  (  ( businessId = ? )  ) }
+2017-09-15 16:11:47,025 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 482] order = { ORDER BY uploadTime DESC}
+2017-09-15 16:11:47,026 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 420] list_ql = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC , uploadTime DESC}
+2017-09-15 16:11:47,026 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 152] count_ql = {SELECT count(*) FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC}
+2017-09-15 16:11:47,031 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 737] executeCount totalRows = {0}
+2017-09-15 16:13:04,461 INFO [http-nio-6696-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] [DirectJDKLog.java : 179] Initializing Spring FrameworkServlet 'dispatcherServlet'
+2017-09-15 16:13:04,461 INFO [http-nio-6696-exec-1] o.s.web.servlet.DispatcherServlet [FrameworkServlet.java : 489] FrameworkServlet 'dispatcherServlet': initialization started
+2017-09-15 16:13:04,524 INFO [http-nio-6696-exec-1] o.s.web.servlet.DispatcherServlet [FrameworkServlet.java : 508] FrameworkServlet 'dispatcherServlet': initialization completed in 63 ms
+2017-09-15 16:13:17,522 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 497] qlString = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o WHERE 1=1 ORDER BY o.fileSort DESC}
+2017-09-15 16:13:17,523 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 701] conIndex = {130}
+2017-09-15 16:13:17,524 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 706] 条件前的?个数：{0}
+2017-09-15 16:13:17,525 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 707] 条件后的?个数：{0}
+2017-09-15 16:13:17,526 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 708] 条件的起始位置：{0}
+2017-09-15 16:13:17,526 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 674] condition = { AND  (  ( businessId = ? )  ) }
+2017-09-15 16:13:17,527 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 482] order = { ORDER BY uploadTime DESC}
+2017-09-15 16:13:17,528 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 420] list_ql = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC , uploadTime DESC}
+2017-09-15 16:13:17,529 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 152] count_ql = {SELECT count(*) FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC}
+2017-09-15 16:13:17,534 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 737] executeCount totalRows = {2}
+2017-09-15 16:13:17,540 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 393] firstFromIndex={108}
+2017-09-15 16:13:17,541 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 395] prefixFrom={SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime }
+2017-09-15 16:13:48,504 INFO [Druid-ConnectionPool-Log-12882270] c.a.d.p.DruidDataSourceStatLoggerImpl [DruidDataSourceStatLoggerImpl.java : 77] {"url":"jdbc:mysql://192.168.0.94:3306/attach?useUnicode=true&characterEncoding=utf8&pinGlobalTxToPhysicalConnection=true","dbType":"mysql","name":"DataSource-12882270","activeCount":0,"activePeak":1,"activePeakTime":"2017-09-15 16:08:49","poolingCount":1,"poolingPeak":1,"poolingPeakTime":"2017-09-15 16:08:50","connectCount":179,"closeCount":179,"executeCount":246,"commitCount":181,"pstmtCacheHitCount":240,"pstmtCacheMissCount":6,"startTransactionCount":181,"transactionHistogram":[7,114,57,3],"connectionHoldTimeHistogram":[0,79,96,3,1],"sqlList":[{"sql":"select count(*) as col_0_0_ from base_file_info fileinfoen0_ where 1=1 and fileinfoen0_.businessId=? order by fileinfoen0_.fileSort DESC","executeCount":9,"executeMillisMax":19,"executeMillisTotal":32,"executeHistogram":[0,8,1],"executeAndResultHoldHistogram":[9],"concurrentMax":1,"fetchRowCount":1,"fetchRowHistogram":[0,9],"inTransactionCount":9},{"sql":"select fileinfoen0_.id as col_0_0_, fileinfoen0_.businessId as col_1_0_, fileinfoen0_.userId as col_2_0_, fileinfoen0_.fileName as col_3_0_, fileinfoen0_.fileSort as col_4_0_, fileinfoen0_.fileSuffix as col_5_0_, fileinfoen0_.fileSize as col_6_0_, fileinfoen0_.relativePath as col_7_0_, fileinfoen0_.uploadTime as col_8_0_ from base_file_info fileinfoen0_ where 1=1 and fileinfoen0_.businessId=? order by fileinfoen0_.fileSort DESC, fileinfoen0_.uploadTime DESC limit ?","executeCount":9,"executeMillisMax":3,"executeMillisTotal":29,"executeHistogram":[0,9],"executeAndResultHoldHistogram":[9],"concurrentMax":1,"fetchRowCount":10,"fetchRowHistogram":[1,2,6],"inTransactionCount":9},{"sql":"select fileinfoen0_.id as id1_0_0_, fileinfoen0_.businessId as business2_0_0_, fileinfoen0_.fileName as fileName3_0_0_, fileinfoen0_.fileSize as fileSize4_0_0_, fileinfoen0_.fileSort as fileSort5_0_0_, fileinfoen0_.fileStatus as fileStat6_0_0_, fileinfoen0_.fileSuffix as fileSuff7_0_0_, fileinfoen0_.relativePath as relative8_0_0_, fileinfoen0_.uploadTime as uploadTi9_0_0_, fileinfoen0_.userId as userId10_0_0_ from base_file_info fileinfoen0_ where fileinfoen0_.id=?","executeCount":168,"executeMillisMax":3,"executeMillisTotal":311,"executeHistogram":[0,168],"executeAndResultHoldHistogram":[168],"concurrentMax":1,"fetchRowCount":1,"fetchRowHistogram":[56,112],"inTransactionCount":168},{"sql":"delete from base_file_info where id=?","executeCount":56,"executeMillisMax":3,"executeMillisTotal":172,"executeHistogram":[0,56],"executeAndResultHoldHistogram":[0,56],"concurrentMax":1,"updateCount":56,"updateCountMax":1,"updateHistogram":[0,56],"inTransactionCount":56},{"sql":"select max(fileinfoen0_.fileSort) as col_0_0_ from base_file_info fileinfoen0_ where fileinfoen0_.businessId=?","executeCount":2,"executeMillisMax":1,"executeMillisTotal":3,"executeHistogram":[0,2],"executeAndResultHoldHistogram":[2],"concurrentMax":1,"fetchRowCount":1,"fetchRowHistogram":[0,2],"inTransactionCount":2},{"sql":"insert into base_file_info (businessId, fileName, fileSize, fileSort, fileStatus, fileSuffix, relativePath, uploadTime, userId, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)","executeCount":2,"executeMillisMax":3,"executeMillisTotal":6,"executeHistogram":[0,2],"executeAndResultHoldHistogram":[0,2],"concurrentMax":1,"updateCount":2,"updateCountMax":1,"updateHistogram":[0,2],"inTransactionCount":2}]}
+2017-09-15 16:13:51,587 ERROR [http-nio-6696-exec-5] c.alibaba.druid.pool.DruidDataSource [DruidDataSource.java : 1190] discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 33,966 milliseconds ago.  The last packet sent successfully to the server was 2,125 milliseconds ago.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:389)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1038)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3422)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3322)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3762)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2435)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2582)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2531)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4852)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:553)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:984)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:549)
+	at com.alibaba.druid.filter.logging.LogFilter.connection_setAutoCommit(LogFilter.java:410)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:549)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:681)
+	at org.hibernate.resource.jdbc.internal.AbstractLogicalConnectionImplementor.begin(AbstractLogicalConnectionImplementor.java:67)
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.begin(LogicalConnectionManagedImpl.java:238)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.begin(JdbcResourceLocalTransactionCoordinatorImpl.java:214)
+	at org.hibernate.engine.transaction.internal.TransactionImpl.begin(TransactionImpl.java:52)
+	at org.hibernate.internal.SessionImpl.beginTransaction(SessionImpl.java:1512)
+	at org.hibernate.jpa.internal.TransactionImpl.begin(TransactionImpl.java:45)
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.beginTransaction(HibernateJpaDialect.java:189)
+	at org.springframework.orm.jpa.JpaTransactionManager.doBegin(JpaTransactionManager.java:380)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:373)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.createTransactionIfNecessary(TransactionAspectSupport.java:447)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:277)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:656)
+	at org.apel.show.attach.core.service.impl.FileInfoServiceImpl$$EnhancerBySpringCGLIB$$e9873d23.findMaxByBusinessId(<generated>)
+	at org.apel.show.attach.core.base.FileStoreServer.storeFile2(FileStoreServer.java:136)
+	at org.apel.show.attach.provider.FileInfoProvider.storeFile2(FileInfoProvider.java:123)
+	at org.apel.show.attach.controller.FileInfoController.fileStore2(FileInfoController.java:52)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:116)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:897)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:790)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:230)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:192)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:192)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165)
+	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:105)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:192)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:81)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:192)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:192)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:474)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:79)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:349)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:783)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:798)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1434)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.socketRead(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at com.mysql.jdbc.util.ReadAheadInputStream.fill(ReadAheadInputStream.java:100)
+	at com.mysql.jdbc.util.ReadAheadInputStream.readFromUnderlyingStreamIfNecessary(ReadAheadInputStream.java:143)
+	at com.mysql.jdbc.util.ReadAheadInputStream.read(ReadAheadInputStream.java:173)
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:2911)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3332)
+	... 85 common frames omitted
+2017-09-15 16:14:12,602 ERROR [Druid-ConnectionPool-Create-12882270] c.alibaba.druid.pool.DruidDataSource [DruidDataSource.java : 1863] create connection error, url: jdbc:mysql://192.168.0.94:3306/attach?useUnicode=true&characterEncoding=utf8&pinGlobalTxToPhysicalConnection=true
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:389)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1038)
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:338)
+	at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2237)
+	at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2270)
+	at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2069)
+	at com.mysql.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:794)
+	at com.mysql.jdbc.JDBC4Connection.<init>(JDBC4Connection.java:44)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:389)
+	at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:399)
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:325)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_connect(FilterChainImpl.java:148)
+	at com.alibaba.druid.filter.stat.StatFilter.connection_connect(StatFilter.java:211)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_connect(FilterChainImpl.java:142)
+	at com.alibaba.druid.filter.FilterAdapter.connection_connect(FilterAdapter.java:785)
+	at com.alibaba.druid.filter.FilterEventAdapter.connection_connect(FilterEventAdapter.java:38)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_connect(FilterChainImpl.java:142)
+	at com.alibaba.druid.pool.DruidAbstractDataSource.createPhysicalConnection(DruidAbstractDataSource.java:1377)
+	at com.alibaba.druid.pool.DruidAbstractDataSource.createPhysicalConnection(DruidAbstractDataSource.java:1431)
+	at com.alibaba.druid.pool.DruidDataSource$CreateConnectionThread.run(DruidDataSource.java:1861)
+Caused by: java.net.ConnectException: Connection timed out: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	at java.net.PlainSocketImpl.connect(Unknown Source)
+	at java.net.SocksSocketImpl.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:213)
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:297)
+	... 21 common frames omitted
+2017-09-15 16:14:14,727 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 497] qlString = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o WHERE 1=1 ORDER BY o.fileSort DESC}
+2017-09-15 16:14:14,728 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 701] conIndex = {130}
+2017-09-15 16:14:14,729 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 706] 条件前的?个数：{0}
+2017-09-15 16:14:14,730 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 707] 条件后的?个数：{0}
+2017-09-15 16:14:14,731 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 708] 条件的起始位置：{0}
+2017-09-15 16:14:14,732 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 674] condition = { AND  (  ( businessId = ? )  ) }
+2017-09-15 16:14:14,733 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 482] order = { ORDER BY uploadTime DESC}
+2017-09-15 16:14:14,734 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 420] list_ql = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC , uploadTime DESC}
+2017-09-15 16:14:14,735 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 152] count_ql = {SELECT count(*) FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC}
+2017-09-15 16:14:14,740 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 737] executeCount totalRows = {6}
+2017-09-15 16:14:14,747 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 393] firstFromIndex={108}
+2017-09-15 16:14:14,749 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 395] prefixFrom={SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime }
+2017-09-15 16:15:29,326 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 497] qlString = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o WHERE 1=1 ORDER BY o.fileSort DESC}
+2017-09-15 16:15:29,326 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 701] conIndex = {130}
+2017-09-15 16:15:29,326 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 706] 条件前的?个数：{0}
+2017-09-15 16:15:29,326 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 707] 条件后的?个数：{0}
+2017-09-15 16:15:29,326 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 708] 条件的起始位置：{0}
+2017-09-15 16:15:29,326 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 674] condition = { AND  (  ( businessId = ? )  ) }
+2017-09-15 16:15:29,326 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 482] order = { ORDER BY uploadTime DESC}
+2017-09-15 16:15:29,326 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 420] list_ql = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC , uploadTime DESC}
+2017-09-15 16:15:29,326 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 152] count_ql = {SELECT count(*) FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC}
+2017-09-15 16:15:29,326 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 737] executeCount totalRows = {6}
+2017-09-15 16:15:29,342 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 393] firstFromIndex={108}
+2017-09-15 16:15:29,342 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 395] prefixFrom={SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime }
+2017-09-15 16:15:51,115 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 497] qlString = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o WHERE 1=1 ORDER BY o.fileSort DESC}
+2017-09-15 16:15:51,115 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 701] conIndex = {130}
+2017-09-15 16:15:51,115 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 706] 条件前的?个数：{0}
+2017-09-15 16:15:51,115 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 707] 条件后的?个数：{0}
+2017-09-15 16:15:51,115 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 708] 条件的起始位置：{0}
+2017-09-15 16:15:51,115 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 674] condition = { AND  (  ( businessId = ? )  ) }
+2017-09-15 16:15:51,131 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 482] order = { ORDER BY uploadTime DESC}
+2017-09-15 16:15:51,131 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 420] list_ql = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC , uploadTime DESC}
+2017-09-15 16:15:51,131 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 152] count_ql = {SELECT count(*) FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC}
+2017-09-15 16:15:51,131 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 737] executeCount totalRows = {9}
+2017-09-15 16:15:51,131 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 393] firstFromIndex={108}
+2017-09-15 16:15:51,131 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 395] prefixFrom={SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime }
+2017-09-15 16:16:32,583 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 497] qlString = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o WHERE 1=1 ORDER BY o.fileSort DESC}
+2017-09-15 16:16:32,583 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 701] conIndex = {130}
+2017-09-15 16:16:32,583 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 706] 条件前的?个数：{0}
+2017-09-15 16:16:32,598 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 707] 条件后的?个数：{0}
+2017-09-15 16:16:32,598 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 708] 条件的起始位置：{0}
+2017-09-15 16:16:32,598 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 674] condition = { AND  (  ( businessId = ? )  ) }
+2017-09-15 16:16:32,598 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 482] order = { ORDER BY uploadTime DESC}
+2017-09-15 16:16:32,598 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 420] list_ql = {SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC , uploadTime DESC}
+2017-09-15 16:16:32,598 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 152] count_ql = {SELECT count(*) FROM FileInfoEntity o  WHERE 1=1  AND  (  ( businessId = ? )  )  ORDER BY o.fileSort DESC}
+2017-09-15 16:16:32,598 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 737] executeCount totalRows = {12}
+2017-09-15 16:16:32,598 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 393] firstFromIndex={108}
+2017-09-15 16:16:32,598 INFO [19157352@qtp-3417769-186] o.a.g.p.dao.CommonRepositoryImpl [CommonRepositoryImpl.java : 395] prefixFrom={SELECT o.id,o.businessId,o.userId,o.fileName,o.fileSort,o.fileSuffix,o.fileSize,o.relativePath,o.uploadTime }
