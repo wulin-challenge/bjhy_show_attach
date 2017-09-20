@@ -93,7 +93,16 @@ var Attachment = function(currentElement,option){
 				        			  url: http_attachment_url + "/customerFileInfo/file_progress",
 				        			  type: "get",
 				        			  afterOperation: function(data){
-				        				  context.percent += data;
+				        				  if(data != 0){
+				        					  context.percent += data;
+				        				  }else{
+				        					  if(context.percent == 90){
+				        						  context.percent +=data;
+				        					  }else{
+				        						  context.percent += 1;
+				        					  }
+				        				  }
+				        				  
 				        			  }
 				        		  });
 								
@@ -102,10 +111,10 @@ var Attachment = function(currentElement,option){
 								context.progressStatus = "success";
 								setTimeout(function(){
 									context.progressVisible = false;
-								}, 600);
+								}, 2000);
 							}
-						}, 200);
-					}, 500);
+						}, 2000);
+					}, 2000);
 					
 				},
 				/**
