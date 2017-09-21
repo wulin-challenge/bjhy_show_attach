@@ -583,11 +583,31 @@ var Attachment = function(currentElement,option){
 				toastr.warning("请请先保存当前编辑行!");
 				return null;
 			}
+//			
+//			 var page = $('#your_grid').getGridParam('page'); // current page
+//			    var rows = $('#your_grid').getGridParam('rows'); // rows  
+//			    var sidx = $('#your_grid').getGridParam('sidx'); // sidx
+//			    var sord = $('#your_grid').getGridParam('sord'); // sord
 			
+			//行数据Id
 			var dataId = $(e.target).attr("dataId");
-			dataId = encodeCode(dataId);
 			
-			window.open(http_attachment_url+'/customerFileInfo/newOfficePage?fileId='+dataId,'_blank');  
+			//当前页
+			var page = fileShowGrid.getGridParam('page'); // current page
+			
+			//当前分页条数
+			var rowNum = fileShowGrid.getGridParam('rowNum'); // current page
+			
+			//当页下是第几条
+			var ind = fileShowGrid.getInd(dataId);
+			
+			//当前数据是第几条
+			var currentNumber = ((page-1)*rowNum)+ind;
+			
+			dataId = encodeCode(dataId);
+			currentNumber = encodeCode(currentNumber);
+			
+			window.open(http_attachment_url+'/customerFileInfo/newOfficePage?fileId='+dataId+'&currentNumber='+currentNumber,'_blank');  
 		});
 	}
 	

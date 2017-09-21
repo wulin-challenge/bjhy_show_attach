@@ -77,8 +77,6 @@ public class CustomerFileInfoController {
 		return new Message(0,"更新成功");
 	}
 	
-	
-	
 	//批量删除
 	@RequestMapping(method = RequestMethod.DELETE)
 	public @ResponseBody Message batchDelete(@RequestParam("ids[]") String[] ids){
@@ -352,6 +350,24 @@ public class CustomerFileInfoController {
 		Office office = fileConvert.getOffice();
 		return office;
 	}
+	
+	/**
+	 * 得到文件信息
+	 * @param fileId 文件Id
+	 * @return
+	 */
+	@RequestMapping("getFileInfo")
+	public @ResponseBody FileInfo getFileInfo(String fileId){
+		
+		if(StringUtils.isEmpty(fileId)){
+			return null;
+		}
+		
+		FileInfo fileInfo = fileInfoProviderService.findFileById(fileId); 
+		return fileInfo;
+	}
+	
+	
 	
 	@RequestMapping("file_progress")
 	public @ResponseBody Integer netCheck(HttpSession session){
