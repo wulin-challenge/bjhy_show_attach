@@ -14,6 +14,7 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apel.show.attach.core.base.FileStorePath.SimpleFile;
 import org.apel.show.attach.core.domain.FileInfoEntity;
 import org.apel.show.attach.core.service.FileInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -267,12 +268,26 @@ public class FileStoreServer {
 	 * @param fileInfo 文件信息对象
 	 * @return 文件的输入流
 	 */
-	private InputStream getFileInputStream(FileInfoEntity fileInfo){
+	public InputStream getFileInputStream(FileInfoEntity fileInfo){
 		if(fileInfo == null){
 			return null;
 		}
 		String reallyPath = FileStorePath.getRootDirectory(getRootDirectory())+fileInfo.getRelativePath();
 		return FileStorePath.getInputStreamByFilePath(reallyPath);
+	}
+	
+	/**
+	 * 得到简单文件对象
+	 * @param fileInfo 文件信息对象
+	 * @return 文件的输入流
+	 */
+	public SimpleFile getSimpleFile(String relativePath){
+		if(StringUtils.isEmpty(relativePath)){
+			return null;
+		}
+		relativePath = FileStorePath.replaceSprit(relativePath);
+		String reallyPath = FileStorePath.getRootDirectory(getRootDirectory())+relativePath;
+		return FileStorePath.getInputStreamByFilePathAndSize(reallyPath);
 	}
 	
 	/**
@@ -294,7 +309,7 @@ public class FileStoreServer {
 	 * @param relativePath 存储人家相对路径
 	 * @return 文件的输入流
 	 */
-	private InputStream getFileInputStream(String relativePath){
+	public InputStream getFileInputStream(String relativePath){
 		if(StringUtils.isEmpty(relativePath)){
 			return null;
 		}

@@ -65,9 +65,10 @@ public class ZipUtil {
    * @return 
    */  
   public static String getFilePathName(String dir,String path){  
-      String p = path.replace(dir+File.separator, "");  
+      String p = path.replace(dir+File.separator, ""); 
       p = p.replace("\\", "/");  
-      return p;  
+      p = p.substring(p.lastIndexOf("/")+1,p.length());
+      return p;
   }  
   /** 
    * 把文件压缩成zip格式 

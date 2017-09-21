@@ -1,5 +1,7 @@
 package org.apel.show.attach.provider.web;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -7,20 +9,25 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpEntity;
 import org.apel.gaia.commons.i18n.Message;
 import org.apel.gaia.commons.jqgrid.QueryParams;
 import org.apel.gaia.commons.pager.PageBean;
@@ -31,6 +38,8 @@ import org.apel.show.attach.provider.util.HttpClientUtil;
 import org.apel.show.attach.service.domain.FileInfo;
 import org.apel.show.attach.service.service.FileInfoProviderService;
 import org.apel.show.attach.service.util.UnZipStorePath;
+import org.apel.show.attach.service.util.UnZipStorePath.SimpleZipFile;
+import org.apel.show.attach.service.util.ZipUtil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -285,8 +294,7 @@ public class CustomerFileInfoController {
 	 * @return
 	 */
 	@RequestMapping(value = "downloadFile",method = RequestMethod.GET)
-	public ResponseEntity<byte[]> downloadFile(String fileId){
-		
+	public ResponseEntity<byte[]> downloadFile(HttpServletRequest request,HttpServletResponse response,String fileId){
 		try {
 			String fileName = "";
 			FileInfo fileInfo = fileInfoProviderService.findFileById(fileId); 
@@ -303,6 +311,134 @@ public class CustomerFileInfoController {
 			e.printStackTrace();
 		}
         return null;
+	}
+	
+	@RequestMapping(value = "downloadZipFile",method = RequestMethod.GET)
+	public void downloadFile(HttpServletRequest request,HttpServletResponse response,String fileIds,String businessId){
+		List<String> fileIdList = new ArrayList<String>();
+		
+		if(businessId == null){
+			return;
+		}
+		
+		if(StringUtils.isEmpty(fileIds)){
+			List<FileInfo> findByBusinessId = fileInfoProviderService.findByBusinessId(businessId);
+			for (FileInfo fileInfo : findByBusinessId) {
+				fileIdList.add(fileInfo.getId());
+			}
+		}else{
+			String[] split = fileIds.split(",");
+			for (String id : split) {
+				fileIdList.add(id);
+			}
+		}
+		
+		SimpleZipFile simpleZipFile = getZipInputStream(fileIdList);
+		downloadLargeFile(request, response, simpleZipFile.getFileName()+".zip", simpleZipFile.getFileSize(), simpleZipFile.getInputStream(),simpleZipFile.getFilePath());
+	}
+	
+	/**
+	 * 
+	 * @param response
+	 * @param fileIds
+	 */
+	private void downloadLargeFile(HttpServletRequest request,HttpServletResponse response,String fileName,long fileSize,InputStream is,String filePath){
+		int BUFFER_SIZE = 4096;
+		InputStream in = null;
+		OutputStream out = null;
+
+		try {
+		     response.setContentType("application/x-download");
+             response.addHeader("Content-Disposition","attachment;filename="+ new String(fileName.getBytes(),"utf-8"));
+             response.addHeader("Content-Length", "" + (int)fileSize);   
+             response.setContentType("application/octet-stream");   
+             
+			int readLength = 0;
+
+			in = new BufferedInputStream(is, BUFFER_SIZE);
+			out = new BufferedOutputStream(response.getOutputStream());
+
+			byte[] buffer = new byte[BUFFER_SIZE];
+			while ((readLength = in.read(buffer)) > 0) {
+				byte[] bytes = new byte[readLength];
+				System.arraycopy(buffer, 0, bytes, 0, readLength);
+				out.write(bytes);
+			}
+
+			out.flush();
+
+			response.addHeader("status", "1");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.addHeader("status", "0");
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (IOException e) {
+				}
+			}
+			if (out != null) {
+				try {
+					out.close();
+				} catch (IOException e) {
+				}
+			}
+			
+			//删除该临时zip文件
+			try {
+				UnZipStorePath.deleteFile(filePath);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private SimpleZipFile getZipInputStream(List<String> fileIds){
+		
+		SimpleZipFile simpleZipFile = new UnZipStorePath().new SimpleZipFile();
+		String unZipDirectory = UnZipStorePath.getUnZipDirectory();
+		UnZipStorePath.createUnZipDirectory(unZipDirectory);
+		
+		for (String fileId : fileIds) {
+			FileInfo fileInfo = fileInfoProviderService.findFileById(fileId); 
+			String relativePath = fileInfo.getRelativePath();
+			Map<String,String> param = new HashMap<String,String>();
+			param.put("relativePath", relativePath);
+			
+			HttpEntity syncReceiveSingleFile = HttpClientUtil.syncReceiveSingleFile("http://localhost:6696/returnFileStream", param); 
+			try (InputStream content = syncReceiveSingleFile.getContent()){
+				String tempFilePath = UnZipStorePath.replaceSprit(unZipDirectory+"/"+fileInfo.getFileName()+"."+fileInfo.getFileSuffix());
+				
+				FileUtils.copyInputStreamToFile(content, new File(tempFilePath));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		String zipFilePath = unZipDirectory+".zip";
+		
+		ZipUtil.zip(unZipDirectory,zipFilePath );
+		
+		
+		FileInputStream fileInputStream = null;
+		
+		try {
+			//删除该临时文件夹
+			UnZipStorePath.deleteFile(unZipDirectory);
+			
+			File file = new File(zipFilePath);
+			fileInputStream = new FileInputStream(file);
+			simpleZipFile.setFileName(UnZipStorePath.getUUID());
+			simpleZipFile.setFileSize(file.length());
+			simpleZipFile.setInputStream(fileInputStream);
+			simpleZipFile.setFilePath(zipFilePath);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return simpleZipFile;
 	}
 	
 	/** 

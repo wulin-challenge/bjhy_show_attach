@@ -194,6 +194,22 @@ public class FileStorePath {
 	}
 	
 	/**
+	 * 将文件路径变成文件输入流以及返回文件大小
+	 * @param file
+	 * @return
+	 */
+	public static SimpleFile getInputStreamByFilePathAndSize(String filePath){
+		File file = new File(filePath);
+		InputStream is = getInputStreamByFile(file);
+		long fileSize = file.length();
+		
+		SimpleFile simpleFile = new FileStorePath().new SimpleFile();
+		simpleFile.setIs(is);
+		simpleFile.setFileSize(fileSize);
+		return simpleFile;
+	}
+	
+	/**
 	 * 将文件变成文件输入流
 	 * @param file
 	 * @return
@@ -300,5 +316,39 @@ public class FileStorePath {
 	       }
 	       return fileSizeString;
 	    }
+	
+	
+	/**
+	 * 简单的文件对象
+	 * @author wubo
+	 */
+	public class SimpleFile{
+		
+		/**
+		 * 文件流
+		 */
+		private InputStream is;
+		
+		/**
+		 * 文件大小
+		 */
+		private long fileSize;
+
+		public InputStream getIs() {
+			return is;
+		}
+
+		public void setIs(InputStream is) {
+			this.is = is;
+		}
+
+		public long getFileSize() {
+			return fileSize;
+		}
+
+		public void setFileSize(long fileSize) {
+			this.fileSize = fileSize;
+		}
+	}
 	
 }

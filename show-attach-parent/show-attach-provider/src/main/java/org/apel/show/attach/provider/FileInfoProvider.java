@@ -186,10 +186,10 @@ public class FileInfoProvider implements FileInfoProviderService{
 		return fileStoreServer.getFileBytes(relativePath);
 	}
 
-//	@Override
-//	public InputStream getFileInputStream2(String relativePath) {
-//		return fileStoreServer.getFileInputStream(relativePath);
-//	}
+	@Override
+	public InputStream getFileInputStream2(String relativePath) {
+		return fileStoreServer.getFileInputStream(relativePath);
+	}
 
 	@Override
 	public String getRootDirectory() {

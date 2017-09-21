@@ -1,26 +1,35 @@
 package org.apel.show.attach.provider.util;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import com.google.common.base.Charsets;
 import com.google.common.collect.Iterables;
-import com.google.common.graph.ElementOrder.Type;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -78,6 +87,34 @@ public class HttpClientUtil {
 			throw new RuntimeException(e);
 		}
 		return result;
+	}
+	
+	/**
+	 * 异步接收单个文件
+	 * @param url 要下载的文件url
+	 * @param param 要传的参数
+	 * @return
+	 */
+	@SuppressWarnings({ "deprecation", "resource" })
+	public static HttpEntity syncReceiveSingleFile(String url, Map<String, String> param){
+		 HttpClient client = new DefaultHttpClient();
+         HttpGet get = new HttpGet(url);
+         
+         Set<Entry<String, String>> entrySet = param.entrySet();
+         for (Entry<String, String> entry : entrySet) {
+        	 get.addHeader(entry.getKey(), entry.getValue());
+		}
+         
+         try {
+			HttpResponse response=client.execute(get);
+			 if(response.getStatusLine().getStatusCode()==200){
+				 HttpEntity entity = response.getEntity();
+				 return entity;
+			 }
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return null;
 	}
 
 }

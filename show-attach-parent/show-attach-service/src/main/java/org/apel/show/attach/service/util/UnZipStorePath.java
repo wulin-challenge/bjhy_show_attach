@@ -84,7 +84,7 @@ public class UnZipStorePath {
 	/**
 	 * 创建解压zip目录
 	 */
-	private static void createUnZipDirectory(String unZipDirectory){
+	public static void createUnZipDirectory(String unZipDirectory){
 		File file = new File(unZipDirectory);
 		if(!file.exists()){
 			file.mkdirs();
@@ -95,7 +95,7 @@ public class UnZipStorePath {
 	 * 得到要解压的zip目录
 	 * @return
 	 */
-	private static String getUnZipDirectory(){
+	public static String getUnZipDirectory(){
 		String uuid = getUUID();
 		String unZipPath = replaceSprit(getRootDirectory()+uuid);//得到要解压的zip路径
 		return unZipPath;
@@ -103,7 +103,7 @@ public class UnZipStorePath {
 	/**
 	 * 创建解压后zip目录
 	 */
-	private static void createUnZipAfterDirectory(String unZipAfterDirectory){
+	public static void createUnZipAfterDirectory(String unZipAfterDirectory){
 		File file = new File(unZipAfterDirectory);
 		if(!file.exists()){
 			file.mkdirs();
@@ -237,6 +237,66 @@ public class UnZipStorePath {
 	 */
 	public abstract class UnZipFileCallBack{
 		public abstract void fileCallBack(File unZipAfterDirectoryFile);
+	}
+	
+	/**
+	 * 简单zip文件对象
+	 * @author wubo
+	 *
+	 */
+	public class SimpleZipFile{
+		
+		/**
+		 * 文件流
+		 */
+		private InputStream inputStream;
+		
+		/**
+		 * 文件大小
+		 */
+		private long fileSize;
+		
+		/**
+		 * 文件名称
+		 */
+		private String fileName;
+		
+		/**
+		 * 文件路径
+		 */
+		private String filePath;
+
+		public InputStream getInputStream() {
+			return inputStream;
+		}
+
+		public void setInputStream(InputStream inputStream) {
+			this.inputStream = inputStream;
+		}
+
+		public long getFileSize() {
+			return fileSize;
+		}
+
+		public void setFileSize(long fileSize) {
+			this.fileSize = fileSize;
+		}
+
+		public String getFileName() {
+			return fileName;
+		}
+
+		public void setFileName(String fileName) {
+			this.fileName = fileName;
+		}
+
+		public String getFilePath() {
+			return filePath;
+		}
+
+		public void setFilePath(String filePath) {
+			this.filePath = filePath;
+		}
 	}
 
 }

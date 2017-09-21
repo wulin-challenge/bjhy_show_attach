@@ -133,12 +133,12 @@ public interface FileInfoProviderService {
 	 */
 	public byte[] getFileBytes1(String relativePath);
 	
-//	/**
-//	 * 得到文件的输入流
-//	 * @param relativePath 存储人家相对路径
-//	 * @return 文件的输入流
-//	 */
-//	public InputStream getFileInputStream2(String relativePath);
+	/**
+	 * 得到文件的输入流
+	 * @param relativePath 存储人家相对路径
+	 * @return 文件的输入流
+	 */
+	public InputStream getFileInputStream2(String relativePath);
 	
 	/**
 	 * 得到文件的根目录

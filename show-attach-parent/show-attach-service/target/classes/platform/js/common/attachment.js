@@ -223,6 +223,7 @@ var Attachment = function(currentElement,option){
 			html+= "</form>";
 			html+= "</div>";
 			
+			html+= "<div class='first-download-zip-div' style='"+showButton('batchDelete')+"'><a id='first-download-zip-id' class='first-download-zip' href='javascript:;'>批量下载</a></div>";
 			html+= "<div class='first-del-div' style='"+showButton('batchDelete')+"'><a id='first-batch-del-id' class='first-del' href='javascript:;'>批量删除</a></div>";
 			
 			html+= "<div class='first-edit-row-div' style='"+showButton('rowEdit')+"'><a id='first-edit-row-div-id' class='first-edit-row-div-class' href='javascript:;'>行编辑</a></div>";
@@ -256,6 +257,9 @@ var Attachment = function(currentElement,option){
 		$(".first-file").css({"text-align":"center","width":option.upload_button_width+"px","height":option.upload_button_height+"px","font-size":"12px","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
 		$(".first-file input").css({"position":"absolute","font-size":"12px","right":"0","top":"0","opacity":"0"});
 		$(".first-file:hover").css({"background":"#AADFFD","border-color":"#78C3F3","color":"#004974","text-decoration":"none"});
+		
+		$(".first-download-zip-div").css({"float":"left","height":getPercentOfPX(option.height,0.12),"width":getAndWidth(option.download_zip_button_width,30)+"px"});
+		$(".first-download-zip").css({"cursor":"pointer","width":option.download_zip_button_width+"px","height":+option.download_zip_button_height+"px","font-size":"12px","display": "inline-block","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
 		
 		$(".first-del-div").css({"float":"left","height":getPercentOfPX(option.height,0.12),"width":getAndWidth(option.batch_delete_button_width,30)+"px"});
 		$(".first-del").css({"cursor":"pointer","width":option.batch_delete_button_width+"px","height":+option.batch_delete_button_height+"px","font-size":"12px","display": "inline-block","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
@@ -298,6 +302,8 @@ var Attachment = function(currentElement,option){
 				upload_button_height:"16",
 				batch_delete_button_width:"50", //批量删除按钮
 				batch_delete_button_height:"16",
+				download_zip_button_width:"50", //打包下载按钮
+				download_zip_button_height:"16",
 				row_edit_button_width:"39.99", //行编辑按钮
 				row_edit_button_height:"16",
 				row_save_button_width:"39.99", //行保存
@@ -310,6 +316,7 @@ var Attachment = function(currentElement,option){
 				delete_single_url:http_attachment_url + "/customerFileInfo",
 				delete_batch_url:http_attachment_url + "/customerFileInfo",
 				download_url: http_attachment_url + "/customerFileInfo/downloadFile",
+				download_zip_url: http_attachment_url + "/customerFileInfo/downloadZipFile",
 				buttonAuthority:['upload','download','showFile','batchDelete','delete','rowEdit','rowSave','rowCancel']
 		};
 		return defaultOptions;
@@ -463,6 +470,7 @@ var Attachment = function(currentElement,option){
 	var dealWithEvent = function(){
 		bindUploadEvent();//绑定上传事件
 		bindBatchDeleteAttachEvent();//绑定删除事件
+		bindDownloadZipAttachEvent();//绑定打包下载事件
 		bindRowEditEvent();//绑定行编辑事件
 		bindRowSaveEvent();//绑定行保存事件
 		bindRowCancelEvent();//绑定行取消事件
@@ -669,6 +677,40 @@ var Attachment = function(currentElement,option){
 			
 			attachVue.singleDeleteParams = e;
 			attachVue.singleDelete=true;
+		});
+	}
+	
+	/**
+	 * 绑定打包下载zip事件
+	 */
+	var bindDownloadZipAttachEvent = function(){
+		
+		$("#first-download-zip-id").click(function(){
+			//判断当前是否有编辑行
+			if(currentEditId != null){
+				toastr.warning("请请先保存当前编辑行!");
+				return null;
+			}
+			
+			var ids = fileShowGrid.jqGrid ('getGridParam', 'selarrrow');
+			if(ids.length == 0){
+				toastr.warning("当前正在打包下载所有数据!");
+				
+				window.location.href = option.download_zip_url+"?businessId="+option.businessId+"&fileIds=";
+			}else{
+				var fileIds = "";
+				for(var i=0;i<ids.length;i++){
+					if(i==0){
+						fileIds = ids[i];
+					}else{
+						fileIds += ","+ids[i];
+					}
+				}
+				window.location.href = option.download_zip_url+"?businessId="+option.businessId+"&fileIds="+fileIds;
+			}
+			
+//			businessId
+			
 		});
 	}
 	
