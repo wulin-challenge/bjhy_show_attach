@@ -53,18 +53,6 @@ public class FileInfoProvider implements FileInfoProviderService{
 	}
 
 	@Override
-	public List<FileInfo> findByBusinessId(String businessId) {
-		List<FileInfo> fileInfoList = new ArrayList<FileInfo>();
-		List<FileInfoEntity> fileInfoEntityList = fileInfoService.findByBusinessId(businessId);
-		for (FileInfoEntity fileInfoEntity : fileInfoEntityList) {
-			FileInfo fileInfo = new FileInfo();
-			BeanUtils.copyProperties(fileInfoEntity,fileInfo);
-			fileInfoList.add(fileInfo);
-		}
-		return fileInfoList;
-	}
-
-	@Override
 	public void deleteById(String id) {
 		
 		try{
@@ -144,6 +132,18 @@ public class FileInfoProvider implements FileInfoProviderService{
 		FileInfo fileInfo2 = new FileInfo();
 		BeanUtils.copyProperties(fileInfoEntity,fileInfo2);
 		return fileInfo2;
+	}
+	
+	@Override
+	public List<FileInfo> findByBusinessId(String businessId) {
+		List<FileInfo> fileInfoList = new ArrayList<FileInfo>();
+		List<FileInfoEntity> fileInfoEntityList = fileInfoService.findByBusinessId(businessId);
+		for (FileInfoEntity fileInfoEntity : fileInfoEntityList) {
+			FileInfo fileInfo = new FileInfo();
+			BeanUtils.copyProperties(fileInfoEntity,fileInfo);
+			fileInfoList.add(fileInfo);
+		}
+		return fileInfoList;
 	}
 
 	@Override

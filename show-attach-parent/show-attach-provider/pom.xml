@@ -76,11 +76,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apel</groupId>
-			<artifactId>gaia-property-loader</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apel</groupId>
 			<artifactId>gaia-util</artifactId>
 			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
@@ -89,6 +84,16 @@
 			<artifactId>gaia-commons</artifactId>
 			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apel</groupId>
+			<artifactId>gaia-app-boot</artifactId>
+			<version>1.0.1-SNAPSHOT</version>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.apel</groupId> -->
+<!-- 			<artifactId>gaia-container-boot</artifactId> -->
+<!-- 			<version>1.0.1-SNAPSHOT</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>com.caucho</groupId>
 			<artifactId>hessian</artifactId>

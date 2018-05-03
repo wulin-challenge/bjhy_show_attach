@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-${jsContext}${jquery}${toast}${appJs}${vue}${ele}
+${jsContext}${jquery}${toast}${appJs}${vue}${ele}${attachment}
 <script type="text/javascript" src="${request.contextPath}/js/common/show_office_page.js"></script>
 <title>office</title>
 </head>
@@ -17,6 +17,8 @@ ${jsContext}${jquery}${toast}${appJs}${vue}${ele}
 		  	<el-col :span='8'>&nbsp;</el-col>
 		  </el-row>
 		</el-dialog>
+		
+		<div id="indicatorProgress"></div>
 		<div>
 			<div>
 				<input id="upPageId" type="button" value="上一页"/>

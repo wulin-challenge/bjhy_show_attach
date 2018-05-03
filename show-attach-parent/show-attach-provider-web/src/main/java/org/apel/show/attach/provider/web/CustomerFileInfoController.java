@@ -34,9 +34,9 @@ import org.apel.gaia.commons.pager.PageBean;
 import org.apel.gaia.container.boot.customize.multipart.FileUploadProgressListener;
 import org.apel.gaia.util.BeanUtils;
 import org.apel.gaia.util.jqgrid.JqGridUtil;
-import org.apel.show.attach.provider.util.HttpClientUtil;
 import org.apel.show.attach.service.domain.FileInfo;
 import org.apel.show.attach.service.service.FileInfoProviderService;
+import org.apel.show.attach.service.util.HttpClientUtil;
 import org.apel.show.attach.service.util.UnZipStorePath;
 import org.apel.show.attach.service.util.UnZipStorePath.SimpleZipFile;
 import org.apel.show.attach.service.util.ZipUtil;
@@ -61,6 +61,11 @@ import com.google.common.collect.Maps;
 @RequestMapping("customerFileInfo")
 @CrossOrigin
 public class CustomerFileInfoController {
+	
+	/**
+	 * 文件服务提供者http的url前缀
+	 */
+	public static final String FILE_PROVIDER_URL_PREFIX = "http://localhost:6696";
 	
 	@Reference(timeout=30000)
 	private FileInfoProviderService fileInfoProviderService;
@@ -89,14 +94,12 @@ public class CustomerFileInfoController {
 	//批量删除
 	@RequestMapping(method = RequestMethod.DELETE)
 	public @ResponseBody Message batchDelete(@RequestParam("ids[]") String[] ids){
-		System.out.println(); 
 		for (String id : ids) {
 			FileInfo fileInfo = fileInfoProviderService.findFileById(id);
 			fileInfoProviderService.deleteFile(fileInfo);
 			fileInfoProviderService.deleteById(id);
 		}
-		return new Message(1,"文件删除成功");
-//		return MessageUtil.message("file.delete.success");
+		return new Message(0,"文件删除成功");
 	}
 	
 	//文件上传(这是采用流传输方式实现上传必须屏蔽   spring.http.multipart.enabled=false)
@@ -135,7 +138,7 @@ public class CustomerFileInfoController {
 					if("zip".equalsIgnoreCase(fileSuffix)){
 						storeZipFile(is, fileName, businessId, userId);
 					}else{
-						HttpClientUtil.syncSendSingleFile("http://localhost:6696/fileStore2", param, fileName, is, FileInfo.class); 
+						HttpClientUtil.syncSendSingleFile(FILE_PROVIDER_URL_PREFIX+"/fileStore2", param, fileName, is, FileInfo.class); 
 					}
 				}
 			}

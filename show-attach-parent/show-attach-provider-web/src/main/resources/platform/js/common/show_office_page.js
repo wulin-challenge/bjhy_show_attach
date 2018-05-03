@@ -6,45 +6,14 @@ var totalPages=0; //总共页
 var appVue;
 var currentNumber; //当前数据是第几条
 $(function(){
-	
 	var fileId = decodeCode(getUrlParam("fileId"));
 	currentNumber = decodeCode(getUrlParam("currentNumber"));
 	page = currentNumber;
 	firstFileId = fileId;
 	getFileInfo();//得到文件信息
 	
-	appVue = new Vue({
-		el: "#vue-progress-id",
-		data: function(){
-			return {
-				percent: 0,
-				progressStatus: "error",
-				progressVisible: false
-			};
-		},
-		methods: {
-			start: function(){
-				var context = this;
-				this.progressVisible = true;
-				setTimeout(function(){
-					var timer = setInterval(function(){
-						if(context.percent < 100){
-							context.percent += 1;
-						}else{
-							clearInterval(timer);
-							context.progressStatus = "success";
-							setTimeout(function(){
-								context.progressVisible = false;
-							}, 500);
-						}
-					}, 50);
-				}, 50);
-				
-			}
-		}
-	});
-	
-	appVue.start();
+	var progress = $("#indicatorProgress").dialogIndicator();
+	progress.progressInterval();
 	
 	PlatformUI.ajax({
 		type: "get",
@@ -53,13 +22,11 @@ $(function(){
 		   data:{"fileId":fileId},
 		   async:true,  //async为true表示为异步请求,为false为同步请求
 		   afterOperation:function(obj){
-			  
+			   progress.setProgressNumber(100);
 			   $("#office_id").empty();
 			   $("#office_id").append(obj.htmlContext);
-			   appVue.percent = 100;
 		   }
 	});
-	
 	
 	$("#upPageId").click(function(){
 		if(page == 1){
@@ -99,9 +66,9 @@ $(function(){
 });
 
 function openFile(pageNumber){
-	appVue.start();
-	appVue.percent = 0;
-	appVue.progressStatus= "error";
+	var progress = $("#indicatorProgress").dialogIndicator();
+	progress.progressInterval();
+	
 	PlatformUI.ajax({
 		type: "get",
 		   url:contextPath+'/customerFileInfo/findFileInfo',
@@ -109,7 +76,6 @@ function openFile(pageNumber){
 		   data:{page:pageNumber,rows:rows,filters:JSON.stringify(getGridFilters())},
 		   async:true,  //async为true表示为异步请求,为false为同步请求
 		   afterOperation:function(obj){
-			   
 			   var upId = obj['items'][0]['id'];
 			   totalPages = obj['totalPages'];
 			   
@@ -118,17 +84,16 @@ function openFile(pageNumber){
 					   url:contextPath+'/customerFileInfo/showFileContext',
 					   dataType: "json",
 					   data:{"fileId":upId},
-					   async:false,  //async为true表示为异步请求,为false为同步请求
+					   async:true,  //async为true表示为异步请求,为false为同步请求
 					   afterOperation:function(obj){
-						  
+						   if(progress != null){
+							   progress.setProgressNumber(100);
+						   }
 						   $("#office_id").empty();
 						   $("#office_id").append(obj.htmlContext);
-						   appVue.percent = 100;
 					   }
 				});
 			   
-//			   alert(upId);
-			   console.log(obj);
 		   }
 	});
 }

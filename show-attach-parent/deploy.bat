@@ -1,3 +1,1 @@
-@echo off
-mvn clean install deploy -Dmaven.test.skip=true
-pause
+mvn clean deploy --settings C:\Users\ThinkPad\.m2\settings_jdk8_2.xml -Dmaven.test.skip=true

@@ -48,11 +48,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apel</groupId>
-			<artifactId>gaia-property-loader</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apel</groupId>
 			<artifactId>gaia-commons</artifactId>
 			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
@@ -91,8 +86,13 @@
 			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+		  <groupId>commons-lang</groupId>
+		  <artifactId>commons-lang</artifactId>
+		  <version>2.6</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-configuration</groupId>
@@ -103,6 +103,23 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-compress</artifactId>
 			<version>1.9</version>
+		</dependency>
+				<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>23.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
 		</dependency>
 	</dependencies>
 </project>
