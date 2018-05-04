@@ -1,6 +1,5 @@
 package org.apel.show.attach.provider.web;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -11,14 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
 import org.apel.gaia.commons.i18n.Message;
 import org.apel.show.attach.service.domain.FileInfo;
 import org.apel.show.attach.service.service.FileInfoProviderService;
 import org.apel.show.attach.service.util.HttpClientUtil;
-import org.apel.show.attach.service.util.UnZipStorePath;
-import org.apel.show.attach.service.util.HttpClientUtil.ReceiveSingleFileCallBack;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +35,16 @@ public class HttpFileInfoController {
 	
 	@Reference(timeout=30000)
 	private FileInfoProviderService fileInfoProviderService;
+	
+	/**
+	 * 通过Id查找文件信息
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/findFileById", method = RequestMethod.GET)
+	public @ResponseBody FileInfo findFileById(String id){
+		return fileInfoProviderService.findFileById(id);
+	}
 
 	/**
 	 * 通过业务Id查找出文件信息
