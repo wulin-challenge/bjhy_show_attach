@@ -1,6 +1,8 @@
+/.svn/
 /target/
-/logs/
-/office/
-/.classpath
 /.project
-/.settings
+/.gitignore
+/logs/
+
+
+
