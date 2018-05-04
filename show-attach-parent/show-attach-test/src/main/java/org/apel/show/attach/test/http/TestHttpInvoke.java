@@ -34,7 +34,7 @@ public class TestHttpInvoke {
 		
 		Map<String,String> params = new HashMap<String,String>();
 		params.put("userId", "user1");
-		params.put("businessId", "businessId1");
+		params.put("businessId", "111111");
 		params.put("fileSuffix", "xls");
 		//文件名称在 sendSingleFile 这个方法的第三个参数中传递
 		FileInfo fileInfo = HttpClientUtil.sendSingleFile(HTTP_ATTACHMENT_URL+"/httpFileInfo/fileSingleUpload", is, "例子Demo列表 (1)", params, FileInfo.class);
@@ -58,7 +58,7 @@ public class TestHttpInvoke {
 	private List<FileInfo> findByBusinessId(){
 		String url = HTTP_ATTACHMENT_URL+"/httpFileInfo/findByBusinessId";
 		Map<String,String> params = new HashMap<String,String>();
-		params.put("businessId", "businessId1");
+		params.put("businessId", "111111");
 		
 		List<FileInfo> sendHttpGetList = HttpClientUtil.sendHttpGetList(url, params, FileInfo.class);
 		return sendHttpGetList;
