@@ -116,7 +116,6 @@ public class HttpFileInfoController {
 	
 	/**
 	 * 返回单个文件流
-	 * 
 	 * @param request
 	 */
 	@SuppressWarnings("deprecation")
