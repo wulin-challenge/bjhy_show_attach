@@ -30,14 +30,14 @@ public class TestHttpInvoke {
 	 */
 	@Test
 	public void fileUpload() throws FileNotFoundException{
-		FileInputStream is = new FileInputStream(new File("F:/resources/temp/temp3/temp_file/例子Demo列表 (1).xls"));
+		FileInputStream is = new FileInputStream(new File("F:/resources/temp/temp3/temp_file/123.doc"));
 		
 		Map<String,String> params = new HashMap<String,String>();
 		params.put("userId", "user1");
-		params.put("businessId", "111111");
-		params.put("fileSuffix", "xls");
+		params.put("businessId", "1111112");
+		params.put("fileSuffix", "doc");
 		//文件名称在 sendSingleFile 这个方法的第三个参数中传递
-		FileInfo fileInfo = HttpClientUtil.sendSingleFile(HTTP_ATTACHMENT_URL+"/httpFileInfo/fileSingleUpload", is, "例子Demo列表 (1)", params, FileInfo.class);
+		FileInfo fileInfo = HttpClientUtil.sendSingleFile(HTTP_ATTACHMENT_URL+"/httpFileInfo/fileSingleUpload", is, "123", params, FileInfo.class);
 		System.out.println(fileInfo);
 	}
 	

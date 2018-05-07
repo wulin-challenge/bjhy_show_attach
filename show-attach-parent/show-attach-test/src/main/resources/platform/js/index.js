@@ -5,11 +5,17 @@ $(function(){
 ////		delete_batch_url:http_attachment_url + "/customerFileInfo1"
 //	});
 	
-	var attachment = $("#attachId").attachment({businessId:"1111112"});
+	var businessId = $("#businessInputId").val();
 	
-//	$("#refreshGridId").click(function(e){
-//		attachment.refreshGrid();
-//	});
+	var attachment = $("#attachId").attachment({businessId:businessId});
+	
+	$("#businessSearchId").click(function(){
+		$("#attachId").attachment({businessId:$("#businessInputId").val()});
+	});
+	
+	$("#refreshGridId").click(function(e){
+		attachment.refreshGrid();
+	});
 	
 	
 });
