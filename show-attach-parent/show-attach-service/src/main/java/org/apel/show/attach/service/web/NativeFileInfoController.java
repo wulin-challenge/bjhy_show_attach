@@ -1,4 +1,4 @@
-package org.apel.show.attach.provider.web;
+package org.apel.show.attach.service.web;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,7 +31,6 @@ import org.apache.http.HttpEntity;
 import org.apel.gaia.commons.i18n.Message;
 import org.apel.gaia.commons.jqgrid.QueryParams;
 import org.apel.gaia.commons.pager.PageBean;
-import org.apel.gaia.container.boot.customize.multipart.FileUploadProgressListener;
 import org.apel.gaia.util.BeanUtils;
 import org.apel.gaia.util.jqgrid.JqGridUtil;
 import org.apel.show.attach.service.domain.FileInfo;
@@ -41,33 +40,30 @@ import org.apel.show.attach.service.util.HttpClientUtil;
 import org.apel.show.attach.service.util.UnZipStorePath;
 import org.apel.show.attach.service.util.UnZipStorePath.SimpleZipFile;
 import org.apel.show.attach.service.util.ZipUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.bjhy.inline.office.base.FileConvert;
 import com.bjhy.inline.office.domain.Office;
 import com.google.common.collect.Maps;
-import com.itextpdf.text.log.SysoCounter;
 
 	
 @Controller
-@RequestMapping("customerFileInfo")
-@CrossOrigin
-public class CustomerFileInfoController {
+@RequestMapping("nativeFileInfo")
+public class NativeFileInfoController {
 	
-	/**
-	 * 文件服务提供者http的url前缀
-	 */
-	public static final String FILE_PROVIDER_URL_PREFIX = "http://localhost:6696";
+	@Value("${http_attachment_url}")
+	private String httpAttachmentUrl;
 	
 	@Reference(timeout=30000)
 	private FileInfoProviderService fileInfoProviderService;
@@ -104,103 +100,38 @@ public class CustomerFileInfoController {
 		return new Message(0,"文件删除成功");
 	}
 	
-	//文件上传(这是采用流传输方式实现上传必须屏蔽   spring.http.multipart.enabled=false)
 	@RequestMapping(value = "fileUpload",method = RequestMethod.POST)
-	public @ResponseBody Map<String,Object> fileUpload(HttpServletRequest request){
-		Map<String,Object> resultData = new HashMap<String,Object>();
+	public String fileUpload(HttpServletRequest request,MultipartFile uploadFile){
 		try {
-			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-			if (!isMultipart) {
-				resultData.put("result", 0);
-				return resultData;
-			}
 			
-			ServletFileUpload upload = new ServletFileUpload();
-
-			FileItemIterator iter = upload.getItemIterator(request);
-			while (iter.hasNext()) {
-				FileItemStream item = iter.next();
-				InputStream is = item.openStream();
-				if (!item.isFormField()) {
-					
-					String path = item.getName();
-					String fileName = getFileName(path);
-					String fileSuffix = getFileSuffix(path);
-					
-					String userId = request.getParameter("userId");
-					String businessId = request.getParameter("businessId");
-					
-					//设置参数
-					HashMap<String, String> param = Maps.newHashMap();
-					param.put("fileName", fileName);
-					param.put("fileSuffix", fileSuffix);
-					param.put("userId", userId);
-					param.put("businessId", businessId);
-					
-					if("zip".equalsIgnoreCase(fileSuffix)){
-						storeZipFile(is, fileName, businessId, userId);
-					}else{
-						HttpClientUtil.syncSendSingleFile(FILE_PROVIDER_URL_PREFIX+"/fileStore2", param, fileName, is, FileInfo.class); 
-					}
-				}
-			}
+			InputStream inputStream = uploadFile.getInputStream();
+			
+			byte[] bytes = uploadFile.getBytes();
+			
+			
+			
+			String userId = request.getParameter("userId");
+			String businessId = request.getParameter("businessId");
+			String fileNamePath = request.getParameter("fileName");
+			fileNamePath = FileUtil.replaceSprit(fileNamePath);
+			fileNamePath = fileNamePath.substring(fileNamePath.lastIndexOf("/")+1);
+			
+			String[] fileNameArray = fileNamePath.split("\\.");
+			
+			Map<String,String> params = new HashMap<String,String>();
+			params.put("userId", userId);
+			params.put("businessId", businessId);
+			params.put("fileSuffix", fileNameArray[1]);
+			//文件名称在 sendSingleFile 这个方法的第三个参数中传递
+			HttpClientUtil.sendSingleFile(httpAttachmentUrl+"/httpFileInfo/fileSingleUpload", inputStream, fileNameArray[0], params, FileInfo.class);
+		
+			
 		} catch (Exception e) {
 			System.out.println("当前返回值有点问题");
 		}
 		
-		resultData.put("result", 1);
-		return resultData;
-	}
-	
-	/**
-	 * 得到文件名
-	 * @param fileName
-	 * @return
-	 */
-	private String getFileName(String path){
-		path = FileUtil.replaceSprit(path);
-		int fileNameIndex = path.lastIndexOf("/")+1;
-		int fileSuffixIndex = path.lastIndexOf(".");
-		String fileName= path.substring(fileNameIndex, fileSuffixIndex);
-		return fileName;
-	}
-	
-	/**
-	 * 得到文件后缀
-	 * @param fileName
-	 * @return
-	 */
-	private String getFileSuffix(String path){
-		path = FileUtil.replaceSprit(path);
-		int fileSuffixIndex = path.lastIndexOf(".")+1;
-		String fileSuffix= path.substring(fileSuffixIndex);
-		return fileSuffix;
-	}
-	
-	private void storeZipFile(InputStream is,String fileName,String businessId,String userId){
-		try {
-			Map<String, Object> writeDisc = UnZipStorePath.writeDisc(is, fileName);
-			String unZipDirectory = (String) writeDisc.get("unZipDirectory");
-			File unZipAfterDirectoryFile = (File) writeDisc.get("unZipAfterDirectoryFile");
-			
-			UnZipStorePath.readDirectory(unZipAfterDirectoryFile, new UnZipStorePath().new UnZipFileCallBack(){
-	
-				@Override
-				public void fileCallBack(File unZipAfterDirectoryFile) {
-					HashMap<String, String> param = Maps.newHashMap();
-					param.put("fileName", fileName);
-					param.put("userId", userId);
-					param.put("businessId", businessId);
-					
-					sendStoreFile(unZipAfterDirectoryFile, param);
-				}
-			});
-		
-			UnZipStorePath.deleteFile(unZipDirectory);
-			updateZipSort(businessId);//更改zip的排序号
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		request.setAttribute("data", "{'result':1}");
+		return "common/upload_attach_result";
 	}
 	
 	/**
@@ -225,19 +156,20 @@ public class CustomerFileInfoController {
 		}
 	}
 	
-	private static void sendStoreFile(File file,HashMap<String, String> param){
+	private void sendStoreFile(File file,HashMap<String, String> param){
 		String fileName = file.getName();
 		String fileSuffix = "";
 		String[] fileNameArray = fileName.split("\\.");
 		fileName = fileNameArray[0];
 		fileSuffix = fileNameArray[1];
 		//设置参数
-		param.put("fileName", fileName);
-		param.put("fileSuffix", fileSuffix);
+		Map<String,String> params = new HashMap<String,String>();
+		params.putAll(param);
+		params.put("fileSuffix", fileSuffix);
 		
 		try {
 			FileInputStream is = new FileInputStream(file);
-			HttpClientUtil.syncSendSingleFile("http://localhost:6696/fileStore2", param, fileName, is, FileInfo.class); 
+			HttpClientUtil.sendSingleFile(httpAttachmentUrl+"/httpFileInfo/fileSingleUpload", is, fileName, params, FileInfo.class);
 			System.out.println();
 		} catch (FileNotFoundException e) {
 			System.out.println("当前返回值有点问题");
@@ -246,75 +178,6 @@ public class CustomerFileInfoController {
 		
 		
 	}
-	
-//	//文件上传(这是采用流传输方式实现上传必须屏蔽   spring.http.multipart.enabled=false)
-//	@RequestMapping(value = "fileUpload",method = RequestMethod.POST)
-//	public String fileUpload(HttpServletRequest request){
-//		try {
-////			String id = request.getParameter("id");//获取app的数据库主键
-//			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-//			if (!isMultipart) {
-//				return "error";
-//			}
-//			ServletFileUpload upload = new ServletFileUpload();
-//
-//			FileItemIterator iter = upload.getItemIterator(request);
-//			while (iter.hasNext()) {
-//				FileItemStream item = iter.next();
-//				InputStream stream = item.openStream();
-//				if (!item.isFormField()) {
-//					String fileName = item.getName();
-//					HashMap<String, String> param = Maps.newHashMap();
-//					param.put("id", "111");
-//					param.put("fileName", fileName);
-//					HttpClientUtil.syncSendSingleFile("http://localhost:6696/receiveFile", param, fileName, stream, String.class); 
-//					
-//					System.out.println(fileName);
-////					applicationService.uploadJar(stream, fileName, id);
-//				}
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-////			Throwables.throwIfUnchecked(e);
-//		}
-//		
-//		
-//		return null;
-//	}
-	
-	
-//	//文件上传这是传统采用 spring MultipartFile 的上传做法
-//		@RequestMapping(value = "fileUpload",method = RequestMethod.POST)
-//		public String fileUpload(MultipartFile uploadFile,HttpServletRequest request){
-//			String fileName = "";
-//			String fileSuffix = "";
-//			long fileSize = 0l;
-//			InputStream is = null; 
-//			
-//			try {
-//				is = uploadFile.getInputStream();
-//				fileSize = uploadFile.getSize();
-//				String originalFileName = uploadFile.getOriginalFilename();
-//				String[] fileNameArray = originalFileName.split("\\.");
-//				fileName = fileNameArray[0];
-//				fileSuffix = fileNameArray[1];
-//				
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//			
-//			String userId = request.getParameter("userId");
-//			String businessId = request.getParameter("businessId");
-//			
-//			byte[] fileByteArray = getBytes(is);
-//			
-//			FileInfo fileInfo = fileInfoProviderService.storeFile2(businessId,userId, fileName, fileSuffix,fileSize, fileByteArray);
-//			System.out.println(fileInfo);
-//			
-//			request.setAttribute("data", "{result:1}");
-//			return "common/upload_result";
-//		}
-		
 	
 	/**
 	 * 文件下载
@@ -537,10 +400,10 @@ public class CustomerFileInfoController {
 	
 	@RequestMapping("file_progress")
 	public @ResponseBody Integer netCheck(HttpSession session){
-		Object progress = session.getAttribute(FileUploadProgressListener.PROGRESS_SESSION);
-		if(!Objects.isNull(progress)){
-			return (Integer)progress;
-		}
+//		Object progress = session.getAttribute(FileUploadProgressListener.PROGRESS_SESSION);
+//		if(!Objects.isNull(progress)){
+//			return (Integer)progress;
+//		}
 		return 0;
 	}
 	    

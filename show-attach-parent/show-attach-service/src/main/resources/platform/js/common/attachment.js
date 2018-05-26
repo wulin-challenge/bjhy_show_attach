@@ -167,15 +167,47 @@ var Attachment = function(currentElement,option){
 				row_cancel_button_height:"16",
 				userId:"",
 				businessId:"",
-				upload_url:http_attachment_url + "/customerFileInfo/fileUpload",
-				delete_single_url:http_attachment_url + "/customerFileInfo",
-				delete_batch_url:http_attachment_url + "/customerFileInfo",
-				download_url: http_attachment_url + "/customerFileInfo/downloadFile",
-				download_zip_url: http_attachment_url + "/customerFileInfo/downloadZipFile",
+				upload_url:getHttpContextPath(false) + "fileUpload",
+				delete_single_url:getHttpContextPath(false),
+				delete_batch_url:getHttpContextPath(false),
+				download_url: getHttpContextPath(true) + "downloadFile",
+				download_zip_url: getHttpContextPath(true) + "downloadZipFile",
 				buttonAuthority:['upload','download','showFile','batchDelete','batchDownload','delete','rowEdit','rowSave','rowCancel'],
 				showEventCallback:function(showParam){return true}//预览事件回调,表示打开自身文件,false:表示不打开
 		};
 		return defaultOptions;
+	}
+	
+	/**
+	 * 得到http的上下文路径
+	 * @param isRemotePath : 是否强制使用远程路径 
+	 */
+	var getHttpContextPath = function(isRemotePath){
+		if(!isRemotePath && isIe9()){
+			return contextPath+"/nativeFileInfo/";
+		}
+		return http_attachment_url+"/customerFileInfo/";
+	}
+	
+	/**
+	 * 是否为ie9 浏览器 ,true表示是,false:表示不是
+	 */
+	var isIe9 = function(){
+		if ((navigator.userAgent.indexOf('MSIE') >= 0) 
+				&& (navigator.userAgent.indexOf('Opera') < 0)){
+				var userAgent = navigator.userAgent;
+				var msieIndex = userAgent.indexOf('MSIE');
+				userAgent = userAgent.substring(msieIndex);
+				userAgent = userAgent.substring(0,userAgent.indexOf(";"));
+				var userAgentArray = userAgent.split(" ");
+				if(userAgentArray.length == 2){
+					var ieVersion = parseFloat(userAgentArray[1]);
+					if(ieVersion<=9){ //小于ie9的版本都返回true
+						return true;
+					}
+				}
+			}
+		return false;
 	}
 	
 	/**
@@ -242,7 +274,7 @@ var Attachment = function(currentElement,option){
 	var readerGrid = function(){
 		
 		var jqGrid = {
-				url: http_attachment_url + "/customerFileInfo/findFileInfo",
+				url: getHttpContextPath(false) + "findFileInfo",
 				postData: {filters:JSON.stringify(getGridFilters())},
 				datatype: "json",
 		        width:getPercent(option.width,0.997),
@@ -372,21 +404,63 @@ var Attachment = function(currentElement,option){
 	}
 	
 	/**
-	 * change事件触发后处理的方法
+	 * 专门为Ie9而写的上传
 	 */
-	var fileChangedealWith = function(){
+	var fileChangedealWithOfIe9 = function(){
+		if(checkFileSize($("#upload-file-id").get(0))){
+			var fileName = $("#upload-file-id").val();
+			
+			//添加模态层
+			$("#progressBar2").remove();
+			$("#progressBar").append("<div id='progressBar2'></div>");
+			var progress = $("#progressBar2").dialogIndicator({attachmentElement:currentElement});
+			progress.progressInterval();
+			
+			$("#upload-form-id").asyncSubmit({
+				data:{"businessId":option.businessId,"userId":option.userId,"fileName":fileName},//原生的spring的 multipart 可以这样传输
+				check:function(){
+					return true;
+				},
+				callback:function(data){
+					if(data.result == 1){
+						progress.setProgressNumber(100);
+						cleanAndDestroyDialog(progress);
+						fileShowGrid.jqGrid("setGridParam", {
+							postData: {filters:JSON.stringify(getGridFilters())},
+							page:1
+						}).trigger("reloadGrid")
+					}
+				}
+			});
+		}
+		
+	}
+	
+	/**
+	 * 清除模态框
+	 */
+	var cleanAndDestroyDialog = function(progress){
+		$("#progressBar2").remove();
+		$("#"+progress.getFullBackGroundDiv()).remove();
+		$("#"+progress.getIndicatorProcessDiv()).remove();
+		$(".fullBackGroundDiv").empty();
+		$(".fullBackGroundDiv").remove();
+	}
+	
+	var fileChangedealWithOfOther = function(){
 		if(checkFileSize($("#upload-file-id").get(0))){
 			var progress = $("#progressBar").dialogIndicator({attachmentElement:currentElement});
 			progress.progressInterval();
-			
+			var fileName = $("#upload-file-id").val();
+			fileName = encodeCode(fileName);
 			$("#upload-form-id").ajaxSubmit({
-				url:http_attachment_url + "/customerFileInfo/fileUpload?businessId="+option.businessId+"&userId="+option.userId,
+				url:getHttpContextPath(true) + "fileUpload?businessId="+option.businessId+"&userId="+option.userId+"&fileName="+fileName,
 				type:"post",
-			    datatype:"text",  //这个datatype在不能设置,否则会出错
+//			    datatype:"text",  //这个datatype在不能设置,否则会出错
+			    contentType: "application/json;charset=utf-8",
 				async:true,    
-				data:{"businessId":option.businessId,"userId":option.userId},//原生的spring的 multipart 可以这样传输
+				data:{"businessId":option.businessId,"userId":option.userId,"fileName":fileName},//原生的spring的 multipart 可以这样传输
 				success:function(data){
-					data = eval("("+data+")");
 					if(data.result == 1){
 						progress.setProgressNumber(100);
 						fileShowGrid.jqGrid("setGridParam", {
@@ -405,6 +479,17 @@ var Attachment = function(currentElement,option){
 			
 		}
 		return;
+	}
+	
+	/**
+	 * change事件触发后处理的方法
+	 */
+	var fileChangedealWith = function(){
+		if(isIe9()){
+			fileChangedealWithOfIe9();
+		}else{
+			fileChangedealWithOfOther();
+		}
 	}
 	
 	var checkFileSize = function(fileInput){
@@ -476,7 +561,7 @@ var Attachment = function(currentElement,option){
 			
 			var isOpenFile = option.showEventCallback(showParam);
 			if(isOpenFile){
-				window.open(http_attachment_url+'/customerFileInfo/newOfficePage?fileId='+dataId+'&currentNumber='+currentNumber,'_blank');
+				window.open(getHttpContextPath(true)+'newOfficePage?fileId='+dataId+'&currentNumber='+currentNumber,'_blank');
 			}
 		});
 	}
@@ -507,7 +592,7 @@ var Attachment = function(currentElement,option){
 //				callback:function(action, instance){
 //					if(action == 'confirm'){
 //						PlatformUI.ajax({
-//							url: http_attachment_url + "/customerFileInfo",
+//							url: getHttpContextPath(true),
 //							type: "post",
 //							data: {_method:"delete",ids:ids},
 //							afterOperation: function(){
@@ -674,7 +759,7 @@ var Attachment = function(currentElement,option){
 	 */
 	var saveGridRowData = function(rowData){
 		PlatformUI.ajax({
-			  url: http_attachment_url + "/customerFileInfo/updateFileInfoById",
+			  url: getHttpContextPath(false) + "updateFileInfoById",
 			  type: "post",
 			  data:{id:rowData['id'],fileSort:rowData['fileSort']},
 			  afterOperation: function(data){

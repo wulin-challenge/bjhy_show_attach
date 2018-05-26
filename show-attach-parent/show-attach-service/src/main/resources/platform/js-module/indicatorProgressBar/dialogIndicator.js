@@ -75,7 +75,7 @@ var DialogIndicator = function(currentElement,option){
 	 *渲染html
 	 */
 	var renderHtml = function(){
-		var dialogBeforeHtml = "<div id='"+fullBackGroundDiv+"'></div>";
+		var dialogBeforeHtml = "<div id='"+fullBackGroundDiv+"' class='fullBackGroundDiv'></div>";
 		$(currentElement).before(dialogBeforeHtml);
 		
 		var dialogAppendHtml = option.dialogPrompt+"<div id='"+indicatorProcessDiv+"'></div>";
@@ -131,9 +131,18 @@ var DialogIndicator = function(currentElement,option){
 	me.destroyDialog = function(){
 		$(currentElement).hide();
 		$(currentElement).empty();
-		$("#"+fullBackGroundDiv).hide();
+//		$("#"+fullBackGroundDiv).hide();
 		$("#"+fullBackGroundDiv).remove();
+		$(".fullBackGroundDiv").remove();
 		$("#"+indicatorProcessDiv).remove();
+	}
+	
+	me.getFullBackGroundDiv = function(){
+		return fullBackGroundDiv;
+	}
+	
+	me.getIndicatorProcessDiv = function(){
+		return indicatorProcessDiv;
 	}
 	
 	/**
@@ -180,6 +189,7 @@ var DialogIndicator = function(currentElement,option){
 				progressNumber += 1;
 			}
 		},progressParam.timeInterval);
+		return interval;
 	}
 	
 	/**
@@ -194,6 +204,7 @@ var DialogIndicator = function(currentElement,option){
 	 */
 	me.setProgressNumber = function(progressNumber2){
 		progressNumber = progressNumber2;
+		console.log(progressNumber);
 	}
 	
 	/**
