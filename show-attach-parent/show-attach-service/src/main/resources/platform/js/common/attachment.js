@@ -658,8 +658,13 @@ var Attachment = function(currentElement,option){
 			
 			var ids = fileShowGrid.jqGrid ('getGridParam', 'selarrrow');
 			if(ids.length == 0){
-				toastr.warning("当前正在打包下载所有数据!");
+				var obj = fileShowGrid.jqGrid("getRowData");
+				if(!!obj && obj.length<=0){
+					toastr.warning("当前没有任何数据");
+					return;
+				}
 				
+				toastr.warning("当前正在打包下载所有数据!");
 				window.location.href = option.download_zip_url+"?businessId="+option.businessId+"&fileIds=";
 			}else{
 				var fileIds = "";

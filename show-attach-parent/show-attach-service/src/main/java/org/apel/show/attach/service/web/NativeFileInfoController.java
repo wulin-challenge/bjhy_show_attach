@@ -17,14 +17,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.fileupload.FileItemIterator;
-import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
@@ -55,8 +51,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.bjhy.inline.office.base.FileConvert;
 import com.bjhy.inline.office.domain.Office;
-import com.google.common.collect.Maps;
-
 	
 @Controller
 @RequestMapping("nativeFileInfo")
@@ -103,35 +97,52 @@ public class NativeFileInfoController {
 	@RequestMapping(value = "fileUpload",method = RequestMethod.POST)
 	public String fileUpload(HttpServletRequest request,MultipartFile uploadFile){
 		try {
-			
 			InputStream inputStream = uploadFile.getInputStream();
 			
-			byte[] bytes = uploadFile.getBytes();
-			
-			
+			String path = request.getParameter("fileName");
+			String fileName = getFileName(path);
+			String fileSuffix = getFileSuffix(path);
 			
 			String userId = request.getParameter("userId");
 			String businessId = request.getParameter("businessId");
-			String fileNamePath = request.getParameter("fileName");
-			fileNamePath = FileUtil.replaceSprit(fileNamePath);
-			fileNamePath = fileNamePath.substring(fileNamePath.lastIndexOf("/")+1);
-			
-			String[] fileNameArray = fileNamePath.split("\\.");
 			
 			Map<String,String> params = new HashMap<String,String>();
 			params.put("userId", userId);
 			params.put("businessId", businessId);
-			params.put("fileSuffix", fileNameArray[1]);
+			params.put("fileSuffix", fileSuffix);
 			//文件名称在 sendSingleFile 这个方法的第三个参数中传递
-			HttpClientUtil.sendSingleFile(httpAttachmentUrl+"/httpFileInfo/fileSingleUpload", inputStream, fileNameArray[0], params, FileInfo.class);
+			HttpClientUtil.sendSingleFile(httpAttachmentUrl+"/httpFileInfo/fileSingleUpload", inputStream, fileName, params, FileInfo.class);
 		
-			
 		} catch (Exception e) {
 			System.out.println("当前返回值有点问题");
 		}
-		
 		request.setAttribute("data", "{'result':1}");
 		return "common/upload_attach_result";
+	}
+	
+	/**
+	 * 得到文件名
+	 * @param fileName
+	 * @return
+	 */
+	private String getFileName(String path){
+		path = FileUtil.replaceSprit(path);
+		int fileNameIndex = path.lastIndexOf("/")+1;
+		int fileSuffixIndex = path.lastIndexOf(".");
+		String fileName= path.substring(fileNameIndex, fileSuffixIndex);
+		return fileName;
+	}
+	
+	/**
+	 * 得到文件后缀
+	 * @param fileName
+	 * @return
+	 */
+	private String getFileSuffix(String path){
+		path = FileUtil.replaceSprit(path);
+		int fileSuffixIndex = path.lastIndexOf(".")+1;
+		String fileSuffix= path.substring(fileSuffixIndex);
+		return fileSuffix;
 	}
 	
 	/**
@@ -174,9 +185,6 @@ public class NativeFileInfoController {
 		} catch (FileNotFoundException e) {
 			System.out.println("当前返回值有点问题");
 		}
-		
-		
-		
 	}
 	
 	/**
