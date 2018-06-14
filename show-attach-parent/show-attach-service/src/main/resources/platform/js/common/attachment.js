@@ -107,26 +107,26 @@ var Attachment = function(currentElement,option){
 		
 		//这是上传按钮的样式,"line-height":getPercentOfPX(option.height,0.05)
 		
-		$(".first-form").css({"float":"left","width":getPercentOfPX(option.width,0.1285)});
+		$(".first-form").css({"float":"left","margin-right":"5px","margin-left":"5px"});
 		
-		$(".first-file").css({"text-align":"center","width":option.upload_button_width+"px","height":option.upload_button_height+"px","font-size":"12px","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
+		$(".first-file").css({"text-align":"center","height":option.upload_button_height+"px","font-size":"12px","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
 		$(".first-file input").css({"position":"absolute","font-size":"12px","right":"0","top":"0","opacity":"0"});
 		$(".first-file:hover").css({"background":"#AADFFD","border-color":"#78C3F3","color":"#004974","text-decoration":"none"});
 		
-		$(".first-download-zip-div").css({"float":"left","height":getPercentOfPX(option.height,0.12),"width":getAndWidth(option.download_zip_button_width,30)+"px"});
-		$(".first-download-zip").css({"cursor":"pointer","width":option.download_zip_button_width+"px","height":+option.download_zip_button_height+"px","font-size":"12px","display": "inline-block","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
+		$(".first-download-zip-div").css({"float":"left","height":getPercentOfPX(option.height,0.12),"margin-right":"5px"});
+		$(".first-download-zip").css({"cursor":"pointer","height":+option.download_zip_button_height+"px","font-size":"12px","display": "inline-block","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
 		
-		$(".first-del-div").css({"float":"left","height":getPercentOfPX(option.height,0.12),"width":getAndWidth(option.batch_delete_button_width,30)+"px"});
-		$(".first-del").css({"cursor":"pointer","width":option.batch_delete_button_width+"px","height":+option.batch_delete_button_height+"px","font-size":"12px","display": "inline-block","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
+		$(".first-del-div").css({"float":"left","height":getPercentOfPX(option.height,0.12),"margin-right":"5px"});
+		$(".first-del").css({"cursor":"pointer","height":+option.batch_delete_button_height+"px","font-size":"12px","display": "inline-block","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
 		
-		$(".first-edit-row-div").css({"float":"left","height":getPercentOfPX(option.height,0.12),"width":getAndWidth(option.row_edit_button_width,30)+"px"});
-		$(".first-edit-row-div-class").css({"cursor":"pointer","width":option.row_edit_button_width+"px","height":+option.row_edit_button_height+"px","font-size":"12px","display": "inline-block","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
+		$(".first-edit-row-div").css({"float":"left","height":getPercentOfPX(option.height,0.12),"margin-right":"5px"});
+		$(".first-edit-row-div-class").css({"cursor":"pointer","height":+option.row_edit_button_height+"px","font-size":"12px","display": "inline-block","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
 		
-		$(".first-save-row-div").css({"float":"left","height":getPercentOfPX(option.height,0.12),"width":getAndWidth(option.row_save_button_width,30)+"px"});
-		$(".first-save-row-div-class").css({"cursor":"pointer","width":option.row_save_button_width+"px","height":+option.row_save_button_height+"px","font-size":"12px","display": "inline-block","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
+		$(".first-save-row-div").css({"float":"left","height":getPercentOfPX(option.height,0.12),"margin-right":"5px"});
+		$(".first-save-row-div-class").css({"cursor":"pointer","height":+option.row_save_button_height+"px","font-size":"12px","display": "inline-block","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
 		
-		$(".first-cancel-row-div").css({"float":"left","height":getPercentOfPX(option.height,0.12),"width":getAndWidth(option.row_cancel_button_width,30)+"px"});
-		$(".first-cancel-row-div-class").css({"cursor":"pointer","width":option.row_cancel_button_width+"px","height":+option.row_cancel_button_height+"px","font-size":"12px","display": "inline-block","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
+		$(".first-cancel-row-div").css({"float":"left","height":getPercentOfPX(option.height,0.12),"margin-right":"5px"});
+		$(".first-cancel-row-div-class").css({"cursor":"pointer","height":+option.row_cancel_button_height+"px","font-size":"12px","display": "inline-block","position":"relative","display":"inline-block","background":"#D0EEFF","border":"1px solid #99D3F5","border-radius":"5px","margin-top":"7px","padding":""+getPercentOfPX(option.height,0.01)+" "+getPercentOfPX(option.width,0.01714)+"","overflow":"hidden","color":"#1E88C7","text-decoration":"none","text-indent":"0"});
 		
 	}
 	
