@@ -38,7 +38,7 @@ var Attachment = function(currentElement,option){
 //			type: "post",
 //			data:{ id: "休息休息kkk", time: "2pm" },
 //			success:function(data, textStatus,jqXHR){
-//				console.log(data);
+//				
 //			}
 //		});
 		
