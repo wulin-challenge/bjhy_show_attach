@@ -13,6 +13,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +63,39 @@ public class NativeFileInfoController {
 	@Reference(timeout=30000)
 	private FileInfoProviderService fileInfoProviderService;
 	
+	/**
+	 * 通过文件Id查找文件信息
+	 * @param id 文件Id
+	 * @return
+	 */
+	@RequestMapping(value = "/findFileById", method = RequestMethod.GET)
+	public @ResponseBody FileInfo findFileById(String id){
+		FileInfo fileInfo = fileInfoProviderService.findFileById(id);
+		return fileInfo;
+	}
+	
+	/**
+	 * 通过业务Id进行查找
+	 * @param businessId
+	 * @return
+	 */
+	@RequestMapping(value = "/findByBusinessId", method = RequestMethod.GET)
+	public @ResponseBody List<FileInfo> findByBusinessId(String businessId){
+		List<FileInfo> fileInfoList = fileInfoProviderService.findByBusinessId(businessId);
+		return fileInfoList;
+	}
+	
+	/**
+	 * 通过业务Id进行查找
+	 * @param businessId
+	 * @return
+	 */
+	@RequestMapping(value = "/findByIds", method = RequestMethod.GET)
+	public @ResponseBody List<FileInfo> findByIds(@RequestParam("ids[]") String[] ids){
+		List<FileInfo> fileInfoList = fileInfoProviderService.findByIds(Arrays.asList(ids));
+		return fileInfoList;
+	}
+	
 	@RequestMapping(value = "/findFileInfo", method = RequestMethod.GET)
 	public @ResponseBody PageBean findSelectedCriminal(QueryParams queryParams){
 		JqGridUtil.getPageBean(queryParams);
@@ -96,6 +130,7 @@ public class NativeFileInfoController {
 	
 	@RequestMapping(value = "fileUpload",method = RequestMethod.POST)
 	public String fileUpload(HttpServletRequest request,MultipartFile uploadFile){
+		FileInfo fileInfo = null;
 		try {
 			InputStream inputStream = uploadFile.getInputStream();
 			
@@ -111,12 +146,14 @@ public class NativeFileInfoController {
 			params.put("businessId", businessId);
 			params.put("fileSuffix", fileSuffix);
 			//文件名称在 sendSingleFile 这个方法的第三个参数中传递
-			HttpClientUtil.sendSingleFile(httpAttachmentUrl+"/httpFileInfo/fileSingleUpload", inputStream, fileName, params, FileInfo.class);
+			fileInfo = HttpClientUtil.sendSingleFile(httpAttachmentUrl+"/httpFileInfo/fileSingleUpload", inputStream, fileName, params, FileInfo.class);
 		
 		} catch (Exception e) {
 			System.out.println("当前返回值有点问题");
 		}
-		request.setAttribute("data", "{'result':1}");
+		
+		String fileInfoId = fileInfo == null ? "":fileInfo.getId();
+		request.setAttribute("data", "{'result':1,'fileInfoId':'"+fileInfoId+"'}");
 		return "common/upload_attach_result";
 	}
 	

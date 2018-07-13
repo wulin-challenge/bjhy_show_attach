@@ -13,6 +13,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +73,39 @@ public class CustomerFileInfoController {
 	@Reference(timeout=30000)
 	private FileInfoProviderService fileInfoProviderService;
 	
+	/**
+	 * 通过文件Id查找文件信息
+	 * @param id 文件Id
+	 * @return
+	 */
+	@RequestMapping(value = "/findFileById", method = RequestMethod.GET)
+	public @ResponseBody FileInfo findFileById(String id){
+		FileInfo fileInfo = fileInfoProviderService.findFileById(id);
+		return fileInfo;
+	}
+	
+	/**
+	 * 通过业务Id进行查找
+	 * @param businessId
+	 * @return
+	 */
+	@RequestMapping(value = "/findByBusinessId", method = RequestMethod.GET)
+	public @ResponseBody List<FileInfo> findByBusinessId(String businessId){
+		List<FileInfo> fileInfoList = fileInfoProviderService.findByBusinessId(businessId);
+		return fileInfoList;
+	}
+	
+	/**
+	 * 通过业务Id进行查找
+	 * @param businessId
+	 * @return
+	 */
+	@RequestMapping(value = "/findByIds", method = RequestMethod.GET)
+	public @ResponseBody List<FileInfo> findByIds(@RequestParam("ids[]") String[] ids){
+		List<FileInfo> fileInfoList = fileInfoProviderService.findByIds(Arrays.asList(ids));
+		return fileInfoList;
+	}
+	
 	@RequestMapping(value = "/findFileInfo", method = RequestMethod.GET)
 	public @ResponseBody PageBean findSelectedCriminal(QueryParams queryParams){
 		JqGridUtil.getPageBean(queryParams);
@@ -107,6 +141,7 @@ public class CustomerFileInfoController {
 	//文件上传(这是采用流传输方式实现上传必须屏蔽   spring.http.multipart.enabled=false)
 	@RequestMapping(value = "fileUpload",method = RequestMethod.POST)
 	public @ResponseBody Map<String,Object> fileUpload(HttpServletRequest request){
+		FileInfo fileInfo = null;
 		Map<String,Object> resultData = new HashMap<String,Object>();
 		try {
 			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
@@ -140,15 +175,16 @@ public class CustomerFileInfoController {
 					if("zip".equalsIgnoreCase(fileSuffix)){
 						storeZipFile(is, fileName, businessId, userId);
 					}else{
-						HttpClientUtil.syncSendSingleFile(FILE_PROVIDER_URL_PREFIX+"/fileStore2", param, fileName, is, FileInfo.class); 
+						fileInfo = HttpClientUtil.syncSendSingleFile(FILE_PROVIDER_URL_PREFIX+"/fileStore2", param, fileName, is, FileInfo.class); 
 					}
 				}
 			}
 		} catch (Exception e) {
 			System.out.println("当前返回值有点问题");
 		}
-		
+		String fileInfoId = fileInfo == null ? "":fileInfo.getId();
 		resultData.put("result", 1);
+		resultData.put("fileInfoId", fileInfoId);
 		return resultData;
 	}
 	

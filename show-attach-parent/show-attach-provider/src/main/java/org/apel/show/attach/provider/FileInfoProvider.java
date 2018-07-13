@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apel.gaia.commons.pager.PageBean;
 import org.apel.show.attach.core.base.FileStoreServer;
 import org.apel.show.attach.core.domain.FileInfoEntity;
@@ -51,6 +52,21 @@ public class FileInfoProvider implements FileInfoProviderService{
 		BeanUtils.copyProperties(fileInfoEntity,fileInfo);
 		return fileInfo;
 	}
+	
+	@Override
+	public List<FileInfo> findByIds(List<String> ids) {
+		List<FileInfo> fileInfoList = new ArrayList<FileInfo>();
+		if(ids == null || ids.size()==0){
+			return fileInfoList;
+		}
+		List<FileInfoEntity> fileInfoEntityList = fileInfoService.findByIds(ids);
+		for (FileInfoEntity fileInfoEntity : fileInfoEntityList) {
+			FileInfo fileInfo = new FileInfo();
+			BeanUtils.copyProperties(fileInfoEntity,fileInfo);
+			fileInfoList.add(fileInfo);
+		}
+		return fileInfoList;
+	}
 
 	@Override
 	public void deleteById(String id) {
@@ -78,12 +94,10 @@ public class FileInfoProvider implements FileInfoProviderService{
 		
 		List<FileInfo> fileInfoList = new ArrayList<FileInfo>();
 		for (Object object : list) {
-			
 			FileInfo fileInfo = new FileInfo();
 			
 			BeanUtils.copyProperties(object, fileInfo);
 			fileInfoList.add(fileInfo);
-			
 		}
 		pageBean.setItems(fileInfoList);
 		
@@ -137,6 +151,9 @@ public class FileInfoProvider implements FileInfoProviderService{
 	@Override
 	public List<FileInfo> findByBusinessId(String businessId) {
 		List<FileInfo> fileInfoList = new ArrayList<FileInfo>();
+		if(StringUtils.isBlank(businessId)){
+			return fileInfoList;
+		}
 		List<FileInfoEntity> fileInfoEntityList = fileInfoService.findByBusinessId(businessId);
 		for (FileInfoEntity fileInfoEntity : fileInfoEntityList) {
 			FileInfo fileInfo = new FileInfo();

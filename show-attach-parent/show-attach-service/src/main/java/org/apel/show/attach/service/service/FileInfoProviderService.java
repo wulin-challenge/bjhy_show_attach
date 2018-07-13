@@ -35,6 +35,13 @@ public interface FileInfoProviderService {
 	public List<FileInfo> findByBusinessId(String businessId);
 	
 	/**
+	 * 通过文件 id 集合查询文件
+	 * @param ids
+	 * @return
+	 */
+	public List<FileInfo> findByIds(List<String> ids);
+	
+	/**
 	 * 通过Id删除
 	 * @param id
 	 */

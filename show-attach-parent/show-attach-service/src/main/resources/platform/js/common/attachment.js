@@ -64,6 +64,70 @@ var Attachment = function(currentElement,option){
 	}
 	
 	/**
+	 * 通过文件Id查询文件信息
+	 */
+	me.findFileById = function(id){
+		var result = null;
+		PlatformUI.ajax({
+	        	url: getHttpContextPath(false)+"/findFileById",
+				type: "get",
+				async: false,
+				data: {id:id},
+				afterOperation: function(data, textStatus,jqXHR){
+					if(!!data && textStatus == 'success'){
+						result =  data;
+					}
+				}
+		});
+		return result;
+	}
+	
+	/**
+	 * 通过业务Id查询文件信息
+	 */
+	me.findByBusinessId = function(businessId){
+		var result = null;
+		PlatformUI.ajax({
+	        	url: getHttpContextPath(false)+"/findByBusinessId",
+				type: "get",
+				async: false,
+				data: {businessId:businessId},
+				afterOperation: function(data, textStatus,jqXHR){
+					if(!!data && textStatus == 'success'){
+						result =  data;
+					}
+				}
+		});
+		return result;
+	}
+	
+	/**
+	 * 通过文件Id集合查询文件信息
+	 */
+	me.findByIds = function(ids){
+		var result = null;
+		PlatformUI.ajax({
+	        	url: getHttpContextPath(false)+"/findByIds",
+				type: "get",
+				async: false,
+				data: {ids:ids},
+				afterOperation: function(data, textStatus,jqXHR){
+					if(!!data && textStatus == 'success'){
+						result =  data;
+					}
+				}
+		});
+		return result;
+	}
+	
+	/**
+	 * 得到业务Id
+	 */
+	me.getBusinessId = function(){
+		return option.businessId;
+	}
+	
+	/**
 	 * 渲染html
 	 */
 	var renderHtml = function(){
@@ -142,7 +206,12 @@ var Attachment = function(currentElement,option){
 	 * businessId : 业务Id
 	 * upload_url:上传的url
 	 * buttonAuthority:按钮的显示权限
-	 * 
+	 * showEventCallback://预览事件回调,表示打开自身文件,false:表示不打开
+	 * operationCallback:function(operationParams){} //按钮操作回调
+	 * operationParams:{
+	 *   operationType:'upload'|'download'|'showFile'|'batchDelete'|'batchDownload'|'delete'|'rowEdit'|'rowSave'|'rowCancel'
+	 *   returnParams:[{fileInfo}]
+	 * }
 	 */
 	var defaultParams = function(){
 		/**
@@ -173,9 +242,21 @@ var Attachment = function(currentElement,option){
 				download_url: getHttpContextPath(true) + "downloadFile",
 				download_zip_url: getHttpContextPath(true) + "downloadZipFile",
 				buttonAuthority:['upload','download','showFile','batchDelete','batchDownload','delete','rowEdit','rowSave','rowCancel'],
-				showEventCallback:function(showParam){return true}//预览事件回调,表示打开自身文件,false:表示不打开
+				showEventCallback:function(showParam){return true},//预览事件回调,表示打开自身文件,false:表示不打开
+				operationCallback:function(operationParams){}//按钮操作回调
 		};
 		return defaultOptions;
+	}
+	
+	/**
+	 * 默认的操作参数
+	 */
+	var defaultOperationParams = function(){
+		var operationParams = {
+			'operationType':'',
+			'returnParams':[]
+		};
+		return operationParams;
 	}
 	
 	/**
@@ -429,6 +510,12 @@ var Attachment = function(currentElement,option){
 							postData: {filters:JSON.stringify(getGridFilters())},
 							page:1
 						}).trigger("reloadGrid")
+						
+						//操作回调
+						var operationParams = defaultOperationParams();
+						operationParams['operationType'] = "upload";
+						operationParams['returnParams'] = !!data.fileInfoId?[me.findFileById(data.fileInfoId)]:[];
+						option.operationCallback(operationParams);
 					}
 				}
 			});
@@ -467,6 +554,12 @@ var Attachment = function(currentElement,option){
 							postData: {filters:JSON.stringify(getGridFilters())},
 							page:1
 						}).trigger("reloadGrid")
+						
+						//操作回调
+						var operationParams = defaultOperationParams();
+						operationParams['operationType'] = "upload";
+						operationParams['returnParams'] = !!data.fileInfoId?[me.findFileById(data.fileInfoId)]:[];
+						option.operationCallback(operationParams);
 					}
 				},
 				beforeSubmit:function(){
@@ -520,6 +613,12 @@ var Attachment = function(currentElement,option){
 			var dataId = $(e.target).attr("dataId");
 			
 			window.location.href = option.download_url+"?fileId="+dataId;
+			
+			//操作回调
+			var operationParams = defaultOperationParams();
+			operationParams['operationType'] = "download";
+			operationParams['returnParams'] = !!dataId?[me.findFileById(dataId)]:[];
+			option.operationCallback(operationParams);
 		});
 	}
 	
@@ -563,6 +662,12 @@ var Attachment = function(currentElement,option){
 			if(isOpenFile){
 				window.open(getHttpContextPath(true)+'newOfficePage?fileId='+dataId+'&currentNumber='+currentNumber,'_blank');
 			}
+			
+			//操作回调
+			var operationParams = defaultOperationParams();
+			operationParams['operationType'] = "showFile";
+			operationParams['returnParams'] = !!dataId?[me.findFileById(dataId)]:[];
+			option.operationCallback(operationParams);
 		});
 	}
 	
@@ -626,6 +731,13 @@ var Attachment = function(currentElement,option){
 			var ids = [dataId];
 			$.messager.confirm('操作','是否确认删除',function(r){
 				if(r){
+					
+					//操作回调
+					var operationParams = defaultOperationParams();
+					operationParams['operationType'] = "delete";
+					operationParams['returnParams'] = me.findByIds(ids);
+					option.operationCallback(operationParams);
+					
 					PlatformUI.ajax({
 						url: option.delete_single_url,
 						type: "post",
@@ -657,6 +769,7 @@ var Attachment = function(currentElement,option){
 			}
 			
 			var ids = fileShowGrid.jqGrid ('getGridParam', 'selarrrow');
+			
 			if(ids.length == 0){
 				var obj = fileShowGrid.jqGrid("getRowData");
 				if(!!obj && obj.length<=0){
@@ -678,8 +791,11 @@ var Attachment = function(currentElement,option){
 				window.location.href = option.download_zip_url+"?businessId="+option.businessId+"&fileIds="+fileIds;
 			}
 			
-//			businessId
-			
+			//操作回调
+			var operationParams = defaultOperationParams();
+			operationParams['operationType'] = "batchDownload";
+			operationParams['returnParams'] = ids.length == 0?me.findByBusinessId(me.getBusinessId()):me.findByIds(ids);
+			option.operationCallback(operationParams);
 		});
 	}
 	
@@ -703,6 +819,13 @@ var Attachment = function(currentElement,option){
 			
 			$.messager.confirm('操作','是否确认删除',function(r){
 				if(r){
+					
+					//操作回调
+					var operationParams = defaultOperationParams();
+					operationParams['operationType'] = "batchDelete";
+					operationParams['returnParams'] = me.findByIds(ids);
+					option.operationCallback(operationParams);
+					
 					//批量删除ajax
 					PlatformUI.ajax({
 				        	url: option.delete_batch_url,
@@ -719,9 +842,6 @@ var Attachment = function(currentElement,option){
 					});
 				}
 			});
-			
-		
-			
 		});
 	}
 	
@@ -745,6 +865,12 @@ var Attachment = function(currentElement,option){
 			currentEditId = rowId[0];
 			// 选中行实际表示的位置
 			fileShowGrid.jqGrid('editRow', rowId);
+			
+			//操作回调
+			var operationParams = defaultOperationParams();
+			operationParams['operationType'] = "rowEdit";
+			operationParams['returnParams'] = [me.findFileById(currentEditId)]
+			option.operationCallback(operationParams);
 		});
 	}
 	
@@ -755,6 +881,13 @@ var Attachment = function(currentElement,option){
 			fileShowGrid.saveRow(currentEditId); 
 			var rowData = fileShowGrid.getRowData(currentEditId);
 			saveGridRowData(rowData);//保存行数据
+			
+			//操作回调
+			var operationParams = defaultOperationParams();
+			operationParams['operationType'] = "rowSave";
+			operationParams['returnParams'] = [me.findFileById(currentEditId)]
+			option.operationCallback(operationParams);
+			
 			currentEditId = null;
 		});
 	}
@@ -776,7 +909,17 @@ var Attachment = function(currentElement,option){
 	//绑定行取消事件
 	var bindRowCancelEvent = function(e){
 		$(".first-cancel-row-div-class").click(function(e){
+			if(currentEditId == null){
+				return;
+			}
 			fileShowGrid.saveRow(currentEditId); 
+			
+			//操作回调
+			var operationParams = defaultOperationParams();
+			operationParams['operationType'] = "rowCancel";
+			operationParams['returnParams'] = [me.findFileById(currentEditId)]
+			option.operationCallback(operationParams);
+			
 			currentEditId = null;
 			 me.refreshGrid();
 		});

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apel.gaia.commons.pager.PageBean;
 import org.apel.show.attach.core.domain.FileInfoEntity;
-import org.springframework.data.jpa.repository.Query;
 
 public interface FileInfoService {
 	
@@ -33,6 +32,13 @@ public interface FileInfoService {
 	 * @return
 	 */
 	public List<FileInfoEntity> findByBusinessId(String businessId);
+	
+	/**
+	 * 通过文件 id 集合查询文件
+	 * @param ids
+	 * @return
+	 */
+	public List<FileInfoEntity> findByIds(List<String> ids);
 	
 	/**
 	 * 通过Id删除

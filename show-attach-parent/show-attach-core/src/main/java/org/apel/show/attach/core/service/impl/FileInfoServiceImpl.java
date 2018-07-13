@@ -40,6 +40,11 @@ public class FileInfoServiceImpl implements FileInfoService{
 	public List<FileInfoEntity> findByBusinessId(String businessId) {
 		return fileInfoRepository.findByBusinessId(businessId);
 	}
+	
+	@Override
+	public List<FileInfoEntity> findByIds(List<String> ids) {
+		return fileInfoRepository.findByIds(ids);
+	}
 
 	@Override
 	public void deleteById(String id) {
@@ -84,4 +89,5 @@ public class FileInfoServiceImpl implements FileInfoService{
 			return findMaxByBusinessId;
 		}
 	}
+
 }

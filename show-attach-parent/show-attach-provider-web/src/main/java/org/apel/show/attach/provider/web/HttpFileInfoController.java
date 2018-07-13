@@ -1,6 +1,7 @@
 package org.apel.show.attach.provider.web;
 
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import org.apel.show.attach.service.util.HttpClientUtil;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -54,6 +56,17 @@ public class HttpFileInfoController {
 	@RequestMapping(value = "/findByBusinessId", method = RequestMethod.GET)
 	public @ResponseBody List<FileInfo> findByBusinessId(String businessId){
 		List<FileInfo> fileInfoList = fileInfoProviderService.findByBusinessId(businessId);
+		return fileInfoList;
+	}
+	
+	/**
+	 * 通过业务Id进行查找
+	 * @param businessId
+	 * @return
+	 */
+	@RequestMapping(value = "/findByIds", method = RequestMethod.GET)
+	public @ResponseBody List<FileInfo> findByIds(@RequestParam("ids[]") String[] ids){
+		List<FileInfo> fileInfoList = fileInfoProviderService.findByIds(Arrays.asList(ids));
 		return fileInfoList;
 	}
 	
