@@ -204,7 +204,6 @@ var DialogIndicator = function(currentElement,option){
 	 */
 	me.setProgressNumber = function(progressNumber2){
 		progressNumber = progressNumber2;
-		console.log(progressNumber);
 	}
 	
 	/**
