@@ -934,4 +934,11 @@ var Attachment = function(currentElement,option){
 			page:1
 		}).trigger("reloadGrid")
 	}
+	
+	/**
+	 * 得到jqgrid
+	 */
+	me.getJqgrid = function(){
+		return fileShowGrid;
+	}
 }
