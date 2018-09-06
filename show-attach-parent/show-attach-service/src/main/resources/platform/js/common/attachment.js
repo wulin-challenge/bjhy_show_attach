@@ -164,8 +164,9 @@ var Attachment = function(currentElement,option){
 	 * 渲染css样式
 	 */
 	var renderStyle = function(){
+		var firstPanelBorder = option.first_panel_border?"1px solid #E4E4E4":"";
 		
-		$(".first-panel").css({"width":option.width,"height":option.height,"border":"1px solid #E4E4E4"});
+		$(".first-panel").css({"width":option.width,"height":option.height,"border":firstPanelBorder});
 		$(".first-top").css({"float":"left","clear":"both","width":"100%","height":"40px","background-color": "while"});
 		$(".first-bottom").css({"clear":"both","width":"100%","height":getPercentOfPX(option.height,0.89),"background-color": "while"});
 		
@@ -220,6 +221,7 @@ var Attachment = function(currentElement,option){
 		var defaultOptions = {
 				width:700,
 				height:400,
+				first_panel_border:false,//是否显示最外围的border边框
 				upload_button_width:"60", //上传按钮
 				upload_button_height:"16",
 				batch_delete_button_width:"60", //批量删除按钮
