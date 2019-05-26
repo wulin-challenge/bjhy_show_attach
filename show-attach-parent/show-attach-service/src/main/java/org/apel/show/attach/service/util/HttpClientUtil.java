@@ -26,9 +26,13 @@ import org.apache.commons.io.Charsets;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.ContentType;
@@ -270,9 +274,43 @@ public class HttpClientUtil {
 	 * @param clazz
 	 * @return
 	 */
-	private static <T> String executeGet(String httpUrl,Map<String,String> params,Class<T> clazz){
+	public static <T> String executeGet(String httpUrl,Map<String,String> params,Class<T> clazz){
+		return executeGet(httpUrl, params,clazz,30000);
+	}
+	
+	/**
+	 * 执行get请求并返回json数据
+	 * @param httpUrl
+	 * @param params
+	 * @param clazz
+	 * @return
+	 */
+	public static <T> String executeGet(String httpUrl,Map<String,String> params,Class<T> clazz,int timeout){
+		return executeGet(httpUrl, params, null, clazz,timeout);
+	}
+	
+	/**
+	 * 执行get请求并返回json数据
+	 * @param httpUrl
+	 * @param params
+	 * @param clazz
+	 * @return
+	 */
+	public static <T> String executeGet(String httpUrl,Map<String,String> params,Map<String, String> headers,Class<T> clazz ,int timeout){
 		httpUrl += getGetParmas(httpUrl,params);
 		HttpGet httpGet = new HttpGet(httpUrl);  
+		
+		if (headers!=null && headers.size()>0) {
+			for (Map.Entry<String, String> headerItem: headers.entrySet()) {
+				httpGet.setHeader(headerItem.getKey(), headerItem.getValue());
+			}
+		}
+		
+		//使用HttpClient，一般都需要设置连接超时时间和获取数据超时时间。这两个参数很重要，目的是为了防止访问其他http时，由于超时导致自己的应用受影响。
+		RequestConfig requestConfig = RequestConfig.custom()  
+		        .setConnectTimeout(timeout).setConnectionRequestTimeout(timeout)  
+		        .setSocketTimeout(timeout).build();  
+		httpGet.setConfig(requestConfig);
 		
 		//执行get请求  
 		try (CloseableHttpClient closeableHttpClient = HttpClientBuilder.create().build();){
@@ -292,6 +330,82 @@ public class HttpClientUtil {
 			LoggerUtils.error("执行该 "+httpUrl+" 出错",e);
 		} 
 		return "";
+	}
+	
+	/**
+	 * 这是post请求
+	 * @param url
+	 * @param params
+	 * @param headers
+	 * @return
+	 */
+	public static String post(String url, Map<String, String> params, Map<String, String> headers){
+		return post(url, params, headers, 30000);
+	}
+	
+	/**
+	 * 这是post请求
+	 * @param url
+	 * @param params
+	 * @param headers
+	 * @param timeout
+	 * @return
+	 */
+	public static String post(String url, Map<String, String> params, Map<String, String> headers,int timeout){
+		HttpPost httpPost = null;
+		CloseableHttpClient httpClient = null;
+		try{
+			// httpPost config
+			httpPost = new HttpPost(url);
+			if (params != null && !params.isEmpty()) {
+				List<NameValuePair> formParams = new ArrayList<NameValuePair>();
+				for(Map.Entry<String,String> entry : params.entrySet()){
+					formParams.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+				}
+				httpPost.setEntity(new UrlEncodedFormEntity(formParams, "UTF-8"));
+			}
+			RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeout).setConnectTimeout(timeout).build();
+			httpPost.setConfig(requestConfig);
+
+			// headers
+			if (headers!=null && headers.size()>0) {
+				for (Map.Entry<String, String> headerItem: headers.entrySet()) {
+					httpPost.setHeader(headerItem.getKey(), headerItem.getValue());
+				}
+			}
+
+			// httpClient = HttpClients.createDefault();	// default retry 3 times
+			// httpClient = HttpClients.custom().setRetryHandler(new DefaultHttpRequestRetryHandler(3, true)).build();
+			httpClient = HttpClients.custom().disableAutomaticRetries().build();
+			
+			// parse response
+			HttpResponse response = httpClient.execute(httpPost);
+			HttpEntity entity = response.getEntity();
+			if (null != entity) {
+				if (response.getStatusLine().getStatusCode() == 200) {
+					String responseMsg = EntityUtils.toString(entity, "UTF-8");
+					EntityUtils.consume(entity);
+					return responseMsg;
+				}
+				EntityUtils.consume(entity);
+			}
+			LoggerUtils.info("http statusCode error, statusCode:" + response.getStatusLine().getStatusCode());
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return e.getMessage();
+		} finally{
+			if (httpPost!=null) {
+				httpPost.releaseConnection();
+			}
+			if (httpClient!=null) {
+				try {
+					httpClient.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	/**
