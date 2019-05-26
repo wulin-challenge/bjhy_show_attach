@@ -1,6 +1,6 @@
 /.svn/
 /target/
-/office/
+/.settings/
 /.project
 /.gitignore
 /logs/
